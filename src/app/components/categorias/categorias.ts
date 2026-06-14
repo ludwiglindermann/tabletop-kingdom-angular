@@ -146,19 +146,27 @@ export class CategoriasComponent {
   }
 
   agregarAlCarrito(juego: any) {
-    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-    const index = carrito.findIndex((item: any) => item.nombre === juego.nombre);
-
-    if (index !== -1) {
-      carrito[index].cantidad++;
-    } else {
-      carrito.push({ ...juego, cantidad: 1 });
-    }
-
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    this.mensajeAgregado = `✅ ${juego.nombre} agregado al carrito`;
-    setTimeout(() => {
-      this.mensajeAgregado = '';
-    }, 2000);
+  // Verificar si hay sesión activa
+  const usuarioActivo = sessionStorage.getItem('usuarioActivo');
+  if (!usuarioActivo) {
+    alert('Debes iniciar sesión para agregar productos al carrito');
+    this.router.navigate(['/login']);
+    return;
   }
+
+  const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+  const index = carrito.findIndex((item: any) => item.nombre === juego.nombre);
+
+  if (index !== -1) {
+    carrito[index].cantidad++;
+  } else {
+    carrito.push({ ...juego, cantidad: 1 });
+  }
+
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+  this.mensajeAgregado = `✅ ${juego.nombre} agregado al carrito`;
+  setTimeout(() => {
+    this.mensajeAgregado = '';
+  }, 2000);
+}
 }
