@@ -4,6 +4,11 @@
     <p>{{ categoriaData.descripcion }}</p>
   </section>
 
+  <div *ngIf="mensajeAgregado" class="text-center py-2"
+    style="background-color: var(--color-tarjeta); color: #4caf50; font-weight: bold;">
+    {{ mensajeAgregado }}
+  </div>
+
   <section class="container mt-4" *ngIf="categoriaData">
     <div class="row g-4 justify-content-center">
 
@@ -21,6 +26,11 @@
             <span class="badge-regular" *ngIf="!juego.descuento">
               Precio regular
             </span>
+            <div class="mt-3">
+              <button (click)="agregarAlCarrito(juego)" class="btn-registro">
+                🛒 Agregar al carrito
+              </button>
+            </div>
           </div>
         </article>
       </div>

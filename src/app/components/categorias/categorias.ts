@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 export class CategoriasComponent {
 
   categoriaActual: string = '';
+  mensajeAgregado: string = '';
 
   todasLasCategorias: any = {
     estrategia: {
@@ -137,10 +138,27 @@ export class CategoriasComponent {
 
   categoriaData: any = null;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => {
       this.categoriaActual = params['id'];
       this.categoriaData = this.todasLasCategorias[this.categoriaActual];
     });
+  }
+
+  agregarAlCarrito(juego: any) {
+    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    const index = carrito.findIndex((item: any) => item.nombre === juego.nombre);
+
+    if (index !== -1) {
+      carrito[index].cantidad++;
+    } else {
+      carrito.push({ ...juego, cantidad: 1 });
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    this.mensajeAgregado = `✅ ${juego.nombre} agregado al carrito`;
+    setTimeout(() => {
+      this.mensajeAgregado = '';
+    }, 2000);
   }
 }

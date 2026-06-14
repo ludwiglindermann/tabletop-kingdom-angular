@@ -6,6 +6,7 @@ import { RecuperarComponent } from './components/recuperar/recuperar';
 import { PerfilComponent } from './components/perfil/perfil';
 import { CategoriasComponent } from './components/categorias/categorias';
 import { AdminComponent } from './components/admin/admin';
+import { CarritoComponent } from './components/carrito/carrito';
 
 export const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilComponent },
   { path: 'categorias/:id', component: CategoriasComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'carrito', component: CarritoComponent },
   { path: '**', redirectTo: '' }
 ];

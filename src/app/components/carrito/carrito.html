@@ -1,0 +1,55 @@
+<main class="container my-5">
+  <section class="intro">
+    <h2>🛒 Mi Carrito</h2>
+    <p>Revisa los juegos que agregaste antes de comprar.</p>
+  </section>
+
+  <section class="container mt-4">
+
+    <div *ngIf="mensajeExito" class="mensaje-exito"
+      [style.display]="mensajeExito ? 'block' : 'none'">
+      {{ mensajeExito }}
+    </div>
+
+    <div *ngIf="carrito.length === 0 && !mensajeExito" class="text-center mt-5">
+      <p style="font-size: 1.2rem; opacity: 0.7;">Tu carrito está vacío 🎲</p>
+      <a routerLink="/" class="btn-registro mt-3">Ver categorías</a>
+    </div>
+
+    <div *ngIf="carrito.length > 0">
+      <div class="row g-4">
+        <div class="col-12" *ngFor="let item of carrito; let i = index">
+          <div class="form-container d-flex align-items-center gap-4">
+            <img [src]="item.imagen" [alt]="item.nombre"
+              style="width: 100px; height: 80px; object-fit: cover; border-radius: 8px;"/>
+            <div class="flex-grow-1">
+              <h3 style="color: var(--color-acento);">{{ item.nombre }}</h3>
+              <p style="opacity: 0.7;">{{ item.descripcion }}</p>
+              <p class="price">{{ item.precio }}</p>
+              <p style="opacity: 0.7;">Cantidad: {{ item.cantidad }}</p>
+            </div>
+            <button (click)="eliminarItem(i)" class="btn btn-danger btn-sm">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-container mt-4 text-center">
+        <h3 style="color: var(--color-acento);">
+          Total: ${{ total.toLocaleString('es-CL') }}
+        </h3>
+        <div class="d-flex gap-3 justify-content-center mt-4">
+          <button (click)="simularPago()" class="btn-registro">
+            💳 Pagar ahora
+          </button>
+          <button (click)="vaciarCarrito()" class="btn-limpiar">
+            Vaciar carrito
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</main>
