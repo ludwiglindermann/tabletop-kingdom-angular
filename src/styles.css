@@ -1,1 +1,436 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===========================
+   VARIABLES CSS
+=========================== */
+:root {
+  --color-fondo: #1a1a2e;
+  --color-primario: #e94560;
+  --color-secundario: #16213e;
+  --color-tarjeta: #0f3460;
+  --color-texto: #eaeaea;
+  --color-acento: #f5a623;
+  --fuente-titulo: 'Georgia', serif;
+  --fuente-cuerpo: 'Trebuchet MS', sans-serif;
+  --radio-borde: 12px;
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ===========================
+   RESET Y BASE
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-cuerpo);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   ANIMACIONES CSS
+=========================== */
+@keyframes bajarHeader {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulso {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes aparecerTarjeta {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes brillo {
+  0% { box-shadow: 0 0 5px var(--color-primario); }
+  50% { box-shadow: 0 0 20px var(--color-primario); }
+  100% { box-shadow: 0 0 5px var(--color-primario); }
+}
+
+@keyframes entradaFicha {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ===========================
+   HEADER
+=========================== */
+header {
+  background-color: var(--color-secundario);
+  text-align: center;
+  padding: 40px 20px;
+  border-bottom: 3px solid var(--color-primario);
+  animation: bajarHeader 0.8s ease forwards;
+}
+
+.crown {
+  font-size: 3rem;
+  display: block;
+  animation: pulso 2s infinite;
+}
+
+header h1 {
+  font-family: var(--fuente-titulo);
+  font-size: 2.8rem;
+  color: var(--color-acento);
+  margin: 10px 0 5px;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--color-texto);
+  opacity: 0.7;
+}
+
+/* ===========================
+   NAVEGACIÓN
+=========================== */
+nav.breadcrumb {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  background-color: var(--color-secundario);
+  border-bottom: 1px solid var(--color-tarjeta);
+}
+
+nav.breadcrumb a {
+  color: var(--color-acento);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+nav.breadcrumb a:hover {
+  color: var(--color-primario);
+}
+
+/* ===========================
+   MAIN E INTRO
+=========================== */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.intro h2 {
+  font-size: 1.8rem;
+  color: var(--color-primario);
+  margin-bottom: 10px;
+}
+
+.intro p {
+  opacity: 0.8;
+}
+
+/* ===========================
+   TARJETAS DE CATEGORÍAS
+=========================== */
+.category-card {
+  background-color: var(--color-tarjeta);
+  border-radius: var(--radio-borde);
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-texto);
+  box-shadow: var(--sombra);
+  animation: aparecerTarjeta 0.6s ease forwards;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  display: block;
+}
+
+.category-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-info {
+  padding: 16px;
+}
+
+.category-card:hover {
+  transform: translateY(-8px);
+  animation: brillo 1s infinite;
+}
+
+.category-card h3 {
+  font-size: 1.3rem;
+  color: var(--color-acento);
+  margin-bottom: 8px;
+}
+
+.category-card p {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+/* ===========================
+   TARJETAS DE JUEGOS
+=========================== */
+.game-card {
+  background-color: var(--color-tarjeta);
+  border-radius: var(--radio-borde);
+  width: 100%;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  animation: entradaFicha 0.6s ease forwards;
+  transition: transform 0.3s ease;
+}
+
+.game-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.game-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+}
+
+.game-card h3 {
+  font-size: 1.4rem;
+  color: var(--color-acento);
+  margin-bottom: 10px;
+  font-family: var(--fuente-titulo);
+}
+
+.description {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--color-primario);
+  margin-bottom: 10px;
+}
+
+.badge-descuento {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background-color: var(--color-primario);
+  color: white;
+}
+
+.badge-regular {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background-color: var(--color-tarjeta);
+  border: 1px solid var(--color-acento);
+  color: var(--color-acento);
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--color-secundario);
+  border-top: 2px solid var(--color-primario);
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-top: 60px;
+}
+
+/* ===========================
+   FORMULARIO DE REGISTRO
+=========================== */
+.form-container {
+  background-color: var(--color-tarjeta);
+  border-radius: var(--radio-borde);
+  padding: 40px;
+  box-shadow: var(--sombra);
+}
+
+.form-container h2 {
+  color: var(--color-acento);
+  font-family: var(--fuente-titulo);
+}
+
+.form-label {
+  color: var(--color-texto);
+  font-weight: bold;
+}
+
+.opcional {
+  color: var(--color-acento);
+  font-size: 0.85rem;
+  font-weight: normal;
+}
+
+.form-control {
+  background-color: var(--color-secundario) !important;
+  border: 1px solid var(--color-tarjeta) !important;
+  color: var(--color-texto) !important;
+  border-radius: 8px !important;
+}
+
+.form-control:focus {
+  border-color: var(--color-primario) !important;
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.25) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(234, 234, 234, 0.4) !important;
+}
+
+.btn-registro {
+  background-color: var(--color-primario);
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-registro:hover {
+  background-color: #c73652;
+  color: white;
+}
+
+.btn-limpiar {
+  background-color: transparent;
+  color: var(--color-acento);
+  border: 2px solid var(--color-acento);
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-limpiar:hover {
+  background-color: var(--color-acento);
+  color: var(--color-fondo);
+}
+
+.mensaje-exito {
+  display: none;
+  text-align: center;
+  color: #4caf50;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: rgba(76, 175, 80, 0.15);
+}
+
+/* ===========================
+   PANEL ADMINISTRADOR
+=========================== */
+.admin-card {
+  background-color: var(--color-tarjeta);
+  border-radius: var(--radio-borde);
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: var(--sombra);
+  transition: transform 0.3s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-6px);
+}
+
+.admin-icon {
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.admin-card h3 {
+  font-size: 1.3rem;
+  color: var(--color-acento);
+  margin-bottom: 8px;
+  font-family: var(--fuente-titulo);
+}
+
+.admin-card p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.table-dark th {
+  color: var(--color-acento) !important;
+  border-color: var(--color-tarjeta) !important;
+}
+
+.table-dark td {
+  color: var(--color-texto) !important;
+  border-color: var(--color-tarjeta) !important;
+}
+
+/* ===========================
+   MENÚ DE SESIÓN
+=========================== */
+.sesion-info {
+  margin-bottom: 10px;
+}
+
+.sesion-nombre {
+  color: var(--color-acento);
+  font-size: 1rem;
+}
+
+.sesion-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.sesion-botones a,
+.sesion-botones button {
+  flex: 0 0 auto;
+}
+
+/* ===========================
+   MEDIA QUERIES
+=========================== */
+@media (max-width: 768px) {
+  header h1 { font-size: 2rem; }
+  .form-container { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  header h1 { font-size: 1.5rem; }
+  .intro h2 { font-size: 1.3rem; }
+}

@@ -1,0 +1,74 @@
+<main class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="form-container">
+        <h2 class="text-center mb-4">Modificar Perfil</h2>
+
+        <div class="mb-3">
+          <label class="form-label">Nombre completo</label>
+          <input type="text" [(ngModel)]="nombre"
+            class="form-control"/>
+          <small class="text-danger">{{ errorNombre }}</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nombre de usuario</label>
+          <input type="text" [(ngModel)]="usuario"
+            class="form-control"/>
+          <small class="text-danger">{{ errorUsuario }}</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" [value]="correo"
+            class="form-control" disabled/>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            Nueva contraseña
+            <span class="opcional">(opcional)</span>
+          </label>
+          <input type="password" [(ngModel)]="password"
+            class="form-control" placeholder="Déjalo vacío para no cambiar"/>
+          <small class="text-danger">{{ errorPassword }}</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            Repetir nueva contraseña
+            <span class="opcional">(opcional)</span>
+          </label>
+          <input type="password" [(ngModel)]="password2"
+            class="form-control" placeholder="Repite la nueva contraseña"/>
+          <small class="text-danger">{{ errorPassword2 }}</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Fecha de nacimiento</label>
+          <input type="date" [(ngModel)]="fecha" class="form-control"/>
+          <small class="text-danger">{{ errorFecha }}</small>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            Dirección de despacho
+            <span class="opcional">(opcional)</span>
+          </label>
+          <input type="text" [(ngModel)]="direccion" class="form-control"/>
+        </div>
+
+        <div class="d-flex gap-3 justify-content-center mt-4">
+          <button (click)="guardar()" class="btn-registro">Guardar cambios</button>
+          <button (click)="cerrarSesion()" class="btn-limpiar">Cerrar sesión</button>
+        </div>
+
+        <div class="mensaje-exito mt-3"
+          [style.display]="mensajeExito ? 'block' : 'none'">
+          {{ mensajeExito }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>

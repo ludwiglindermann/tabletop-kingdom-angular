@@ -1,3 +1,19 @@
 import { Routes } from '@angular/router';
+import { InicioComponent } from './components/inicio/inicio';
+import { LoginComponent } from './components/login/login';
+import { RegistroComponent } from './components/registro/registro';
+import { RecuperarComponent } from './components/recuperar/recuperar';
+import { PerfilComponent } from './components/perfil/perfil';
+import { CategoriasComponent } from './components/categorias/categorias';
+import { AdminComponent } from './components/admin/admin';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', component: InicioComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent },
+  { path: 'recuperar', component: RecuperarComponent },
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'categorias/:id', component: CategoriasComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: '**', redirectTo: '' }
+];
