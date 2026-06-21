@@ -4,33 +4,47 @@
       <div class="form-container">
         <h2 class="text-center mb-4">Iniciar Sesión</h2>
 
-        <div class="mb-3">
-          <label class="form-label">Correo electrónico</label>
-          <input type="email" [(ngModel)]="correo"
-            class="form-control" placeholder="tucorreo@email.com"/>
-          <small class="text-danger">{{ errorCorreo }}</small>
-        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-        <div class="mb-3">
-          <label class="form-label">Contraseña</label>
-          <input type="password" [(ngModel)]="password"
-            class="form-control" placeholder="Tu contraseña"/>
-          <small class="text-danger">{{ errorPassword }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" formControlName="correo" class="form-control" placeholder="tucorreo@email.com" />
+            <small class="text-danger" *ngIf="correo?.errors?.['required'] && correo?.touched">
+              El correo es obligatorio
+            </small>
+            <small class="text-danger" *ngIf="correo?.errors?.['email'] && correo?.touched">
+              El correo no tiene un formato válido
+            </small>
+          </div>
 
-        <div class="text-danger text-center mb-3">{{ errorLogin }}</div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <div class="input-group">
+              <input [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+                placeholder="Tu contraseña" />
+              <button type="button" class="btn btn-outline-secondary" (click)="togglePassword()">
+                {{ mostrarPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <small class="text-danger" *ngIf="password?.invalid && password?.touched">
+              La contraseña es obligatoria
+            </small>
+          </div>
 
-        <div class="d-flex gap-3 justify-content-center mt-4">
-          <button (click)="iniciarSesion()" class="btn-registro">Ingresar</button>
-          <button (click)="limpiar()" class="btn-limpiar">Limpiar</button>
-        </div>
+          <div class="text-danger text-center mb-3">{{ errorLogin }}</div>
 
-        <div class="text-center mt-3">
-          <a routerLink="/recuperar" style="color: var(--color-acento);">
-            ¿Olvidaste tu contraseña?
-          </a>
-        </div>
+          <div class="d-flex gap-3 justify-content-center mt-4">
+            <button type="submit" class="btn-registro">Ingresar</button>
+            <button type="button" (click)="onLimpiar()" class="btn-limpiar">Limpiar</button>
+          </div>
 
+          <div class="text-center mt-3">
+            <a routerLink="/recuperar" style="color: var(--color-acento);">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+
+        </form>
       </div>
     </div>
   </div>

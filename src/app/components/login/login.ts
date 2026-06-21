@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class LoginComponent {
 
-  correo: string = '';
-  password: string = '';
-  errorCorreo: string = '';
-  errorPassword: string = '';
+  loginForm: FormGroup;
   errorLogin: string = '';
+  mostrarPassword: boolean = false;
+
+togglePassword() {
+  this.mostrarPassword = !this.mostrarPassword;
+}
 
   usuariosPorDefecto = [
     {
@@ -38,35 +40,31 @@ export class LoginComponent {
     }
   ];
 
-  constructor(private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.loginForm = this.fb.group({
+      correo: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+
     if (!localStorage.getItem('usuarios')) {
       localStorage.setItem('usuarios', JSON.stringify(this.usuariosPorDefecto));
     }
   }
 
-  iniciarSesion() {
-    this.errorCorreo = '';
-    this.errorPassword = '';
+  get correo() { return this.loginForm.get('correo'); }
+  get password() { return this.loginForm.get('password'); }
+
+  onSubmit() {
     this.errorLogin = '';
 
-    let valido = true;
-
-    if (this.correo === '') {
-      this.errorCorreo = 'El correo es obligatorio';
-      valido = false;
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
     }
 
-    if (this.password === '') {
-      this.errorPassword = 'La contraseña es obligatoria';
-      valido = false;
-    }
-
-    if (!valido) return;
-
+    const { correo, password } = this.loginForm.value;
     const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-    const usuario = usuarios.find((u: any) =>
-      u.correo === this.correo && u.password === this.password
-    );
+    const usuario = usuarios.find((u: any) => u.correo === correo && u.password === password);
 
     if (!usuario) {
       this.errorLogin = 'Correo o contraseña incorrectos';
@@ -83,11 +81,8 @@ export class LoginComponent {
     }
   }
 
-  limpiar() {
-    this.correo = '';
-    this.password = '';
-    this.errorCorreo = '';
-    this.errorPassword = '';
+  onLimpiar() {
+    this.loginForm.reset();
     this.errorLogin = '';
   }
 }

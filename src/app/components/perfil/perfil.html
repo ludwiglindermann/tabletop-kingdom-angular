@@ -4,70 +4,95 @@
       <div class="form-container">
         <h2 class="text-center mb-4">Modificar Perfil</h2>
 
-        <div class="mb-3">
-          <label class="form-label">Nombre completo</label>
-          <input type="text" [(ngModel)]="nombre"
-            class="form-control"/>
-          <small class="text-danger">{{ errorNombre }}</small>
-        </div>
+        <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
 
-        <div class="mb-3">
-          <label class="form-label">Nombre de usuario</label>
-          <input type="text" [(ngModel)]="usuario"
-            class="form-control"/>
-          <small class="text-danger">{{ errorUsuario }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre completo</label>
+            <input type="text" formControlName="nombre" class="form-control"/>
+            <small class="text-danger" *ngIf="nombre?.invalid && nombre?.touched">
+              El nombre es obligatorio
+            </small>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">Correo electrónico</label>
-          <input type="email" [value]="correo"
-            class="form-control" disabled/>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre de usuario</label>
+            <input type="text" formControlName="usuario" class="form-control"/>
+            <small class="text-danger" *ngIf="usuario?.invalid && usuario?.touched">
+              El nombre de usuario es obligatorio
+            </small>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">
-            Nueva contraseña
-            <span class="opcional">(opcional)</span>
-          </label>
-          <input type="password" [(ngModel)]="password"
-            class="form-control" placeholder="Déjalo vacío para no cambiar"/>
-          <small class="text-danger">{{ errorPassword }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" formControlName="correo" class="form-control"/>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">
-            Repetir nueva contraseña
-            <span class="opcional">(opcional)</span>
-          </label>
-          <input type="password" [(ngModel)]="password2"
-            class="form-control" placeholder="Repite la nueva contraseña"/>
-          <small class="text-danger">{{ errorPassword2 }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">
+              Nueva contraseña
+              <span class="opcional">(opcional)</span>
+            </label>
+            <div class="input-group">
+              <input [type]="mostrarPassword ? 'text' : 'password'" formControlName="password"
+                class="form-control" placeholder="Déjalo vacío para no cambiar"/>
+              <button type="button" class="btn btn-outline-secondary" (click)="togglePassword()">
+                {{ mostrarPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <small class="text-danger" *ngIf="password?.errors?.['minlength'] && password?.touched">
+              La contraseña debe tener al menos 6 caracteres
+            </small>
+            <small class="text-danger" *ngIf="password?.errors?.['maxlength'] && password?.touched">
+              La contraseña debe tener máximo 18 caracteres
+            </small>
+            <small class="text-danger" *ngIf="password?.errors?.['passwordInsegura'] && password?.touched">
+              Debe incluir al menos una mayúscula y un número
+            </small>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">Fecha de nacimiento</label>
-          <input type="date" [(ngModel)]="fecha" class="form-control"/>
-          <small class="text-danger">{{ errorFecha }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">
+              Repetir nueva contraseña
+              <span class="opcional">(opcional)</span>
+            </label>
+            <input type="password" formControlName="password2"
+              class="form-control" placeholder="Repite la nueva contraseña"/>
+            <small class="text-danger"
+              *ngIf="perfilForm.errors?.['passwordsNoCoinciden'] && password2?.touched">
+              Las contraseñas no coinciden
+            </small>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">
-            Dirección de despacho
-            <span class="opcional">(opcional)</span>
-          </label>
-          <input type="text" [(ngModel)]="direccion" class="form-control"/>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Fecha de nacimiento</label>
+            <input type="date" formControlName="fecha" class="form-control"/>
+            <small class="text-danger" *ngIf="fecha?.errors?.['required'] && fecha?.touched">
+              La fecha de nacimiento es obligatoria
+            </small>
+            <small class="text-danger" *ngIf="fecha?.errors?.['edadMinima'] && fecha?.touched">
+              Debes tener al menos 13 años
+            </small>
+          </div>
 
-        <div class="d-flex gap-3 justify-content-center mt-4">
-          <button (click)="guardar()" class="btn-registro">Guardar cambios</button>
-          <button (click)="cerrarSesion()" class="btn-limpiar">Cerrar sesión</button>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">
+              Dirección de despacho
+              <span class="opcional">(opcional)</span>
+            </label>
+            <input type="text" formControlName="direccion" class="form-control"/>
+          </div>
 
-        <div class="mensaje-exito mt-3"
-          [style.display]="mensajeExito ? 'block' : 'none'">
-          {{ mensajeExito }}
-        </div>
+          <div class="d-flex gap-3 justify-content-center mt-4">
+            <button type="submit" class="btn-registro">Guardar cambios</button>
+            <button type="button" (click)="cerrarSesion()" class="btn-limpiar">Cerrar sesión</button>
+          </div>
 
+          <div class="mensaje-exito mt-3"
+            [style.display]="mensajeExito ? 'block' : 'none'">
+            {{ mensajeExito }}
+          </div>
+
+        </form>
       </div>
     </div>
   </div>

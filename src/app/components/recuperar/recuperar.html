@@ -7,37 +7,70 @@
           Ingresa tu correo y tu nueva contraseña
         </p>
 
-        <div class="mb-3">
-          <label class="form-label">Correo electrónico</label>
-          <input type="email" [(ngModel)]="correo"
-            class="form-control" placeholder="tucorreo@email.com"/>
-          <small class="text-danger">{{ errorCorreo }}</small>
-        </div>
+        <form [formGroup]="recuperarForm" (ngSubmit)="onSubmit()">
 
-        <div class="mb-3">
-          <label class="form-label">Nueva contraseña</label>
-          <input type="password" [(ngModel)]="nuevaPassword"
-            class="form-control" placeholder="Entre 6 y 18 caracteres"/>
-          <small class="text-danger">{{ errorPassword }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" formControlName="correo"
+              class="form-control" placeholder="tucorreo@email.com"/>
+            <small class="text-danger" *ngIf="correo?.errors?.['required'] && correo?.touched">
+              El correo es obligatorio
+            </small>
+            <small class="text-danger" *ngIf="correo?.errors?.['email'] && correo?.touched">
+              El correo no tiene un formato válido
+            </small>
+            <small class="text-danger" *ngIf="errorCorreoNoExiste">
+              {{ errorCorreoNoExiste }}
+            </small>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">Repetir nueva contraseña</label>
-          <input type="password" [(ngModel)]="confirmarPassword"
-            class="form-control" placeholder="Repite tu nueva contraseña"/>
-          <small class="text-danger">{{ errorConfirmar }}</small>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Nueva contraseña</label>
+            <div class="input-group">
+              <input [type]="mostrarPassword ? 'text' : 'password'" formControlName="nuevaPassword"
+                class="form-control" placeholder="Entre 6 y 18 caracteres"/>
+              <button type="button" class="btn btn-outline-secondary" (click)="togglePassword()">
+                {{ mostrarPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <small class="text-danger" *ngIf="nuevaPassword?.errors?.['required'] && nuevaPassword?.touched">
+              La contraseña es obligatoria
+            </small>
+            <small class="text-danger" *ngIf="nuevaPassword?.errors?.['minlength'] && nuevaPassword?.touched">
+              La contraseña debe tener al menos 6 caracteres
+            </small>
+            <small class="text-danger" *ngIf="nuevaPassword?.errors?.['maxlength'] && nuevaPassword?.touched">
+              La contraseña debe tener máximo 18 caracteres
+            </small>
+            <small class="text-danger" *ngIf="nuevaPassword?.errors?.['passwordInsegura'] && nuevaPassword?.touched">
+              Debe incluir al menos una mayúscula y un número
+            </small>
+          </div>
 
-        <div class="d-flex gap-3 justify-content-center mt-4">
-          <button (click)="recuperar()" class="btn-registro">Actualizar</button>
-          <button (click)="limpiar()" class="btn-limpiar">Limpiar</button>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Repetir nueva contraseña</label>
+            <input type="password" formControlName="confirmarPassword"
+              class="form-control" placeholder="Repite tu nueva contraseña"/>
+            <small class="text-danger" *ngIf="confirmarPassword?.invalid && confirmarPassword?.touched">
+              Debes confirmar la contraseña
+            </small>
+            <small class="text-danger"
+              *ngIf="recuperarForm.errors?.['passwordsNoCoinciden'] && confirmarPassword?.touched && confirmarPassword?.valid">
+              Las contraseñas no coinciden
+            </small>
+          </div>
 
-        <div class="mensaje-exito mt-3"
-          [style.display]="mensajeExito ? 'block' : 'none'">
-          {{ mensajeExito }}
-        </div>
+          <div class="d-flex gap-3 justify-content-center mt-4">
+            <button type="submit" class="btn-registro">Actualizar</button>
+            <button type="button" (click)="onLimpiar()" class="btn-limpiar">Limpiar</button>
+          </div>
 
+          <div class="mensaje-exito mt-3"
+            [style.display]="mensajeExito ? 'block' : 'none'">
+            {{ mensajeExito }}
+          </div>
+
+        </form>
       </div>
     </div>
   </div>

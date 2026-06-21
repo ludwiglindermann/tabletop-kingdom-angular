@@ -1,79 +1,76 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+
+function passwordsIgualesValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('nuevaPassword')?.value;
+  const password2 = control.get('confirmarPassword')?.value;
+  if (password !== password2) {
+    return { passwordsNoCoinciden: true };
+  }
+  return null;
+}
+
+function passwordSeguraValidator(control: AbstractControl): ValidationErrors | null {
+  const valor = control.value || '';
+  const tieneMayuscula = /[A-Z]/.test(valor);
+  const tieneNumero = /[0-9]/.test(valor);
+
+  if (!tieneMayuscula || !tieneNumero) {
+    return { passwordInsegura: true };
+  }
+  return null;
+}
 
 @Component({
   selector: 'app-recuperar',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './recuperar.html',
   styleUrl: './recuperar.css'
 })
 export class RecuperarComponent {
 
-  correo: string = '';
-  nuevaPassword: string = '';
-  confirmarPassword: string = '';
-
-  errorCorreo: string = '';
-  errorPassword: string = '';
-  errorConfirmar: string = '';
+  recuperarForm: FormGroup;
+  errorCorreoNoExiste: string = '';
   mensajeExito: string = '';
+  mostrarPassword: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.recuperarForm = this.fb.group({
+      correo: ['', [Validators.required, Validators.email]],
+      nuevaPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(18), passwordSeguraValidator]],
+      confirmarPassword: ['', [Validators.required]]
+    }, { validators: passwordsIgualesValidator });
+  }
 
-  recuperar() {
-    this.errorCorreo = '';
-    this.errorPassword = '';
-    this.errorConfirmar = '';
+  get correo() { return this.recuperarForm.get('correo'); }
+  get nuevaPassword() { return this.recuperarForm.get('nuevaPassword'); }
+  get confirmarPassword() { return this.recuperarForm.get('confirmarPassword'); }
+
+  togglePassword() {
+    this.mostrarPassword = !this.mostrarPassword;
+  }
+
+  onSubmit() {
+    this.errorCorreoNoExiste = '';
     this.mensajeExito = '';
 
-    let valido = true;
-
-    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (this.correo === '') {
-      this.errorCorreo = 'El correo es obligatorio';
-      valido = false;
-    } else if (!regexCorreo.test(this.correo)) {
-      this.errorCorreo = 'El correo no tiene un formato válido';
-      valido = false;
-    }
-
-    const regexMayuscula = /[A-Z]/;
-    const regexNumero = /[0-9]/;
-    if (this.nuevaPassword === '') {
-      this.errorPassword = 'La contraseña es obligatoria';
-      valido = false;
-    } else if (this.nuevaPassword.length < 6 || this.nuevaPassword.length > 18) {
-      this.errorPassword = 'La contraseña debe tener entre 6 y 18 caracteres';
-      valido = false;
-    } else if (!regexMayuscula.test(this.nuevaPassword)) {
-      this.errorPassword = 'La contraseña debe tener al menos una letra mayúscula';
-      valido = false;
-    } else if (!regexNumero.test(this.nuevaPassword)) {
-      this.errorPassword = 'La contraseña debe tener al menos un número';
-      valido = false;
-    }
-
-    if (this.confirmarPassword === '') {
-      this.errorConfirmar = 'Debes confirmar la contraseña';
-      valido = false;
-    } else if (this.nuevaPassword !== this.confirmarPassword) {
-      this.errorConfirmar = 'Las contraseñas no coinciden';
-      valido = false;
-    }
-
-    if (!valido) return;
-
-    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-    const index = usuarios.findIndex((u: any) => u.correo === this.correo);
-
-    if (index === -1) {
-      this.errorCorreo = 'No existe una cuenta con ese correo';
+    if (this.recuperarForm.invalid) {
+      this.recuperarForm.markAllAsTouched();
       return;
     }
 
-    usuarios[index].password = this.nuevaPassword;
+    const { correo, nuevaPassword } = this.recuperarForm.value;
+    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+    const index = usuarios.findIndex((u: any) => u.correo === correo);
+
+    if (index === -1) {
+      this.errorCorreoNoExiste = 'No existe una cuenta con ese correo';
+      return;
+    }
+
+    usuarios[index].password = nuevaPassword;
     localStorage.setItem('usuarios', JSON.stringify(usuarios));
 
     this.mensajeExito = '¡Contraseña actualizada! Redirigiendo al login...';
@@ -82,13 +79,9 @@ export class RecuperarComponent {
     }, 2000);
   }
 
-  limpiar() {
-    this.correo = '';
-    this.nuevaPassword = '';
-    this.confirmarPassword = '';
-    this.errorCorreo = '';
-    this.errorPassword = '';
-    this.errorConfirmar = '';
+  onLimpiar() {
+    this.recuperarForm.reset();
+    this.errorCorreoNoExiste = '';
     this.mensajeExito = '';
   }
 }

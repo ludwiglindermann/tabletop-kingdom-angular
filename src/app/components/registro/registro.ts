@@ -1,122 +1,104 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+
+// Validador personalizado: las contraseñas deben coincidir
+function passwordsIgualesValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password')?.value;
+  const password2 = control.get('password2')?.value;
+  if (password !== password2) {
+    return { passwordsNoCoinciden: true };
+  }
+  return null;
+}
+
+// Validador personalizado: edad mínima 13 años
+function edadMinimaValidator(control: AbstractControl): ValidationErrors | null {
+  const fecha = control.value;
+  if (!fecha) return null;
+
+  const hoy = new Date();
+  const nacimiento = new Date(fecha);
+  let edad = hoy.getFullYear() - nacimiento.getFullYear();
+  const mes = hoy.getMonth() - nacimiento.getMonth();
+  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+    edad--;
+  }
+
+  return edad < 13 ? { edadMinima: true } : null;
+}
+
+// Validador personalizado: contraseña segura (mayúscula + número)
+function passwordSeguraValidator(control: AbstractControl): ValidationErrors | null {
+  const valor = control.value || '';
+  const tieneMayuscula = /[A-Z]/.test(valor);
+  const tieneNumero = /[0-9]/.test(valor);
+
+  if (!tieneMayuscula || !tieneNumero) {
+    return { passwordInsegura: true };
+  }
+  return null;
+}
 
 @Component({
   selector: 'app-registro',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './registro.html',
   styleUrl: './registro.css'
 })
 export class RegistroComponent {
 
-  nombre: string = '';
-  usuario: string = '';
-  correo: string = '';
-  password: string = '';
-  password2: string = '';
-  fecha: string = '';
-  direccion: string = '';
-
-  errorNombre: string = '';
-  errorUsuario: string = '';
-  errorCorreo: string = '';
-  errorPassword: string = '';
-  errorPassword2: string = '';
-  errorFecha: string = '';
+  registroForm: FormGroup;
   mensajeExito: string = '';
+  errorCorreoExistente: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.registroForm = this.fb.group({
+      nombre: ['', [Validators.required]],
+      usuario: ['', [Validators.required]],
+      correo: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(18), passwordSeguraValidator]],
+      password2: ['', [Validators.required]],
+      fecha: ['', [Validators.required, edadMinimaValidator]],
+      direccion: ['']
+    }, { validators: passwordsIgualesValidator });
+  }
 
-  registrar() {
-    this.errorNombre = '';
-    this.errorUsuario = '';
-    this.errorCorreo = '';
-    this.errorPassword = '';
-    this.errorPassword2 = '';
-    this.errorFecha = '';
+  // Getters para acceder fácil a los controles desde el HTML
+  get nombre() { return this.registroForm.get('nombre'); }
+  get usuario() { return this.registroForm.get('usuario'); }
+  get correo() { return this.registroForm.get('correo'); }
+  get password() { return this.registroForm.get('password'); }
+  get password2() { return this.registroForm.get('password2'); }
+  get fecha() { return this.registroForm.get('fecha'); }
+
+  onSubmit() {
+    this.errorCorreoExistente = '';
     this.mensajeExito = '';
 
-    let valido = true;
-
-    if (this.nombre === '') {
-      this.errorNombre = 'El nombre completo es obligatorio';
-      valido = false;
+    if (this.registroForm.invalid) {
+      this.registroForm.markAllAsTouched();
+      return;
     }
 
-    if (this.usuario === '') {
-      this.errorUsuario = 'El nombre de usuario es obligatorio';
-      valido = false;
-    }
-
-    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (this.correo === '') {
-      this.errorCorreo = 'El correo electrónico es obligatorio';
-      valido = false;
-    } else if (!regexCorreo.test(this.correo)) {
-      this.errorCorreo = 'El correo no tiene un formato válido';
-      valido = false;
-    }
-
-    const regexMayuscula = /[A-Z]/;
-    const regexNumero = /[0-9]/;
-    if (this.password === '') {
-      this.errorPassword = 'La contraseña es obligatoria';
-      valido = false;
-    } else if (this.password.length < 6 || this.password.length > 18) {
-      this.errorPassword = 'La contraseña debe tener entre 6 y 18 caracteres';
-      valido = false;
-    } else if (!regexMayuscula.test(this.password)) {
-      this.errorPassword = 'La contraseña debe tener al menos una letra mayúscula';
-      valido = false;
-    } else if (!regexNumero.test(this.password)) {
-      this.errorPassword = 'La contraseña debe tener al menos un número';
-      valido = false;
-    }
-
-    if (this.password2 === '') {
-      this.errorPassword2 = 'Debes repetir la contraseña';
-      valido = false;
-    } else if (this.password !== this.password2) {
-      this.errorPassword2 = 'Las contraseñas no coinciden';
-      valido = false;
-    }
-
-    if (this.fecha === '') {
-      this.errorFecha = 'La fecha de nacimiento es obligatoria';
-      valido = false;
-    } else {
-      const hoy = new Date();
-      const nacimiento = new Date(this.fecha);
-      let edad = hoy.getFullYear() - nacimiento.getFullYear();
-      const mes = hoy.getMonth() - nacimiento.getMonth();
-      if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-        edad--;
-      }
-      if (edad < 13) {
-        this.errorFecha = 'Debes tener al menos 13 años para registrarte';
-        valido = false;
-      }
-    }
-
-    if (!valido) return;
+    const datos = this.registroForm.value;
 
     const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-    const existe = usuarios.find((u: any) => u.correo === this.correo);
+    const existe = usuarios.find((u: any) => u.correo === datos.correo);
     if (existe) {
-      this.errorCorreo = 'Ya existe una cuenta con ese correo';
+      this.errorCorreoExistente = 'Ya existe una cuenta con ese correo';
       return;
     }
 
     const nuevoUsuario = {
-      nombre: this.nombre,
-      usuario: this.usuario,
-      correo: this.correo,
-      password: this.password,
+      nombre: datos.nombre,
+      usuario: datos.usuario,
+      correo: datos.correo,
+      password: datos.password,
       rol: 'cliente',
-      fechaNacimiento: this.fecha,
-      direccion: this.direccion
+      fechaNacimiento: datos.fecha,
+      direccion: datos.direccion
     };
 
     usuarios.push(nuevoUsuario);
@@ -128,20 +110,9 @@ export class RegistroComponent {
     }, 2000);
   }
 
-  limpiar() {
-    this.nombre = '';
-    this.usuario = '';
-    this.correo = '';
-    this.password = '';
-    this.password2 = '';
-    this.fecha = '';
-    this.direccion = '';
-    this.errorNombre = '';
-    this.errorUsuario = '';
-    this.errorCorreo = '';
-    this.errorPassword = '';
-    this.errorPassword2 = '';
-    this.errorFecha = '';
+  onLimpiar() {
+    this.registroForm.reset();
     this.mensajeExito = '';
+    this.errorCorreoExistente = '';
   }
 }
