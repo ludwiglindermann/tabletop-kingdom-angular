@@ -3,7 +3,13 @@ import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 
-// Validador personalizado: las contraseñas deben coincidir
+/**
+ *  Validador personalizado a nivel de formulario que comprueba
+ * que la contraseña y su confirmación sean idénticas.
+ * @param control Grupo de controles del formulario de registro.
+ * @returns Un objeto de error `{ passwordsNoCoinciden: true }` si las
+ * contraseñas son distintas, o `null` si coinciden.
+ */
 function passwordsIgualesValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
   const password2 = control.get('password2')?.value;
@@ -13,7 +19,13 @@ function passwordsIgualesValidator(control: AbstractControl): ValidationErrors |
   return null;
 }
 
-// Validador personalizado: edad mínima 13 años
+/**
+ *  Validador personalizado que verifica que el usuario tenga
+ * al menos 13 años a partir de su fecha de nacimiento.
+ * @param control Control del formulario que contiene la fecha de nacimiento.
+ * @returns Un objeto de error `{ edadMinima: true }` si la edad es menor a
+ * 13 años, o `null` si cumple con la edad mínima.
+ */
 function edadMinimaValidator(control: AbstractControl): ValidationErrors | null {
   const fecha = control.value;
   if (!fecha) return null;
@@ -29,7 +41,13 @@ function edadMinimaValidator(control: AbstractControl): ValidationErrors | null 
   return edad < 13 ? { edadMinima: true } : null;
 }
 
-// Validador personalizado: contraseña segura (mayúscula + número)
+/**
+ *  Validador personalizado que exige que la contraseña sea segura,
+ * conteniendo al menos una letra mayúscula y al menos un número.
+ * @param control Control del formulario que contiene la contraseña.
+ * @returns Un objeto de error `{ passwordInsegura: true }` si falta una
+ * mayúscula o un número, o `null` si la contraseña es segura.
+ */
 function passwordSeguraValidator(control: AbstractControl): ValidationErrors | null {
   const valor = control.value || '';
   const tieneMayuscula = /[A-Z]/.test(valor);
@@ -41,6 +59,12 @@ function passwordSeguraValidator(control: AbstractControl): ValidationErrors | n
   return null;
 }
 
+/**
+ *  Componente encargado del registro de nuevos usuarios en
+ * TableTop Kingdom. Utiliza formularios reactivos con validaciones de
+ * campos obligatorios, formato de correo, contraseña segura, coincidencia
+ * de contraseñas y edad mínima.
+ */
 @Component({
   selector: 'app-registro',
   imports: [RouterLink, CommonModule, ReactiveFormsModule],
@@ -73,6 +97,11 @@ export class RegistroComponent {
   get password2() { return this.registroForm.get('password2'); }
   get fecha() { return this.registroForm.get('fecha'); }
 
+  /**
+   *  Procesa el envío del formulario de registro. Valida los datos,
+   * verifica que el correo no esté ya registrado y, si todo es correcto,
+   * guarda el nuevo usuario en localStorage y redirige al login.
+   */
   onSubmit() {
     this.errorCorreoExistente = '';
     this.mensajeExito = '';
@@ -110,6 +139,10 @@ export class RegistroComponent {
     }, 2000);
   }
 
+  /**
+   *  Limpia y reinicia todos los campos del formulario de registro,
+   * además de borrar los mensajes de éxito o de error.
+   */
   onLimpiar() {
     this.registroForm.reset();
     this.mensajeExito = '';

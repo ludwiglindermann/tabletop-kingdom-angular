@@ -8,6 +8,7 @@ import { CategoriasComponent } from './components/categorias/categorias';
 import { AdminComponent } from './components/admin/admin';
 import { CarritoComponent } from './components/carrito/carrito';
 
+/** Definición de las rutas de la aplicación, asociando cada dirección con su componente correspondiente. */
 export const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'login', component: LoginComponent },

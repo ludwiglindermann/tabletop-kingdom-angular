@@ -1,0 +1,703 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tabletop-kingdom-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">tabletop-kingdom-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  NavbarComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/navbar/navbar.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p> Componente del menú de navegación principal. Muestra opciones
+distintas según el estado de la sesión y el rol del usuario (administrador o
+cliente), y permite cerrar sesión. Se actualiza automáticamente cada vez que
+cambia la ruta de la aplicación.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-navbar</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="https://angular.io/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                <code><a href="https://angular.io/api/common/CommonModule" target="_blank" >CommonModule</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./navbar.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./navbar.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#usuarioActivo" >usuarioActivo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cargarSesion" >cargarSesion</a>
+                            </li>
+                            <li>
+                                <a href="#cerrarSesion" >cerrarSesion</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/navbar/navbar.ts:18</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarSesion"></a>
+                    <span class="name">
+                        <span ><b>cargarSesion</b></span>
+                        <a href="#cargarSesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cargarSesion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/components/navbar/navbar.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p> Lee la sesión activa desde sessionStorage y la guarda en la
+propiedad <code>usuarioActivo</code>. Si no hay sesión, deja la propiedad en <code>null</code>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cerrarSesion"></a>
+                    <span class="name">
+                        <span ><b>cerrarSesion</b></span>
+                        <a href="#cerrarSesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cerrarSesion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/app/components/navbar/navbar.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p> Cierra la sesión del usuario, limpia sessionStorage y redirige
+al formulario de login.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/app/components/navbar/navbar.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p> Se ejecuta al iniciar el componente. Suscribe la navegación
+para recargar la sesión cada vez que cambia la ruta y carga la sesión
+actual al arrancar.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usuarioActivo"></a>
+                    <span class="name">
+                        <span ><b>usuarioActivo</b></span>
+                        <a href="#usuarioActivo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/navbar/navbar.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { RouterLink, Router, NavigationEnd } from &#x27;@angular/router&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+
+/**
+ *  Componente del menú de navegación principal. Muestra opciones
+ * distintas según el estado de la sesión y el rol del usuario (administrador o
+ * cliente), y permite cerrar sesión. Se actualiza automáticamente cada vez que
+ * cambia la ruta de la aplicación.
+ */
+@Component({
+  selector: &#x27;app-navbar&#x27;,
+  imports: [RouterLink, CommonModule],
+  templateUrl: &#x27;./navbar.html&#x27;,
+  styleUrl: &#x27;./navbar.css&#x27;
+})
+export class NavbarComponent implements OnInit {
+  usuarioActivo: any &#x3D; null;
+
+  constructor(private router: Router) {}
+
+  /**
+   *  Se ejecuta al iniciar el componente. Suscribe la navegación
+   * para recargar la sesión cada vez que cambia la ruta y carga la sesión
+   * actual al arrancar.
+   */
+  ngOnInit() {
+    this.router.events.subscribe(event &#x3D;&gt; {
+      if (event instanceof NavigationEnd) {
+        this.cargarSesion();
+      }
+    });
+    this.cargarSesion();
+  }
+
+  /**
+   *  Lee la sesión activa desde sessionStorage y la guarda en la
+   * propiedad &#x60;usuarioActivo&#x60;. Si no hay sesión, deja la propiedad en &#x60;null&#x60;.
+   */
+  cargarSesion() {
+    const datos &#x3D; sessionStorage.getItem(&#x27;usuarioActivo&#x27;);
+    if (datos) {
+      this.usuarioActivo &#x3D; JSON.parse(datos);
+    } else {
+      this.usuarioActivo &#x3D; null;
+    }
+  }
+
+  /**
+   *  Cierra la sesión del usuario, limpia sessionStorage y redirige
+   * al formulario de login.
+   */
+  cerrarSesion() {
+    sessionStorage.clear();
+    this.usuarioActivo &#x3D; null;
+    this.router.navigate([&#x27;/login&#x27;]);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;header&gt;
+  &lt;div class&#x3D;&quot;logo-area&quot;&gt;
+    &lt;span class&#x3D;&quot;crown&quot;&gt;♟&lt;/span&gt;
+    &lt;h1&gt;TableTop Kingdom&lt;/h1&gt;
+    &lt;p class&#x3D;&quot;tagline&quot;&gt;Tu reino de juegos de mesa&lt;/p&gt;
+    &lt;div class&#x3D;&quot;sesion-botones mt-3&quot;&gt;
+
+      &lt;ng-container *ngIf&#x3D;&quot;usuarioActivo; else sinSesion&quot;&gt;
+        &lt;span class&#x3D;&quot;sesion-nombre me-3&quot;&gt;
+          &lt;span *ngIf&#x3D;&quot;usuarioActivo.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;&quot;&gt;👑&lt;/span&gt;
+          &lt;span *ngIf&#x3D;&quot;usuarioActivo.rol !&#x3D;&#x3D; &#x27;admin&#x27;&quot;&gt;👤&lt;/span&gt;
+          {{ usuarioActivo.nombre }}
+        &lt;/span&gt;
+        &lt;a routerLink&#x3D;&quot;/admin&quot; class&#x3D;&quot;btn-registro me-2&quot;
+          *ngIf&#x3D;&quot;usuarioActivo.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;&quot;&gt;Panel Admin&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/perfil&quot; class&#x3D;&quot;btn-limpiar me-2&quot;&gt;Mi perfil&lt;/a&gt;
+        &lt;button (click)&#x3D;&quot;cerrarSesion()&quot; class&#x3D;&quot;btn-limpiar&quot;&gt;Cerrar sesión&lt;/button&gt;
+      &lt;/ng-container&gt;
+
+      &lt;ng-template #sinSesion&gt;
+        &lt;a routerLink&#x3D;&quot;/login&quot; class&#x3D;&quot;btn-registro me-2&quot;&gt;Iniciar sesión&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/registro&quot; class&#x3D;&quot;btn-limpiar&quot;&gt;Crear cuenta&lt;/a&gt;
+      &lt;/ng-template&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;nav class&#x3D;&quot;breadcrumb&quot;&gt;
+  &lt;a routerLink&#x3D;&quot;/&quot;&gt;← Inicio&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/login&quot; *ngIf&#x3D;&quot;!usuarioActivo&quot;&gt;Login&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/registro&quot; *ngIf&#x3D;&quot;!usuarioActivo&quot;&gt;Registro&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/recuperar&quot; *ngIf&#x3D;&quot;!usuarioActivo&quot;&gt;Recuperar contraseña&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/perfil&quot; *ngIf&#x3D;&quot;usuarioActivo&quot;&gt;Mi perfil&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/admin&quot; *ngIf&#x3D;&quot;usuarioActivo?.rol &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;&quot;&gt;Panel Admin&lt;/a&gt;
+  &lt;a routerLink&#x3D;&quot;/carrito&quot;&gt;🛒 Carrito&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><header>  <div class="logo-area">    <span class="crown">♟</span>    <h1>TableTop Kingdom</h1>    <p class="tagline">Tu reino de juegos de mesa</p>    <div class="sesion-botones mt-3">      <ng-container *ngIf="usuarioActivo; else sinSesion">        <span class="sesion-nombre me-3">          <span *ngIf="usuarioActivo.rol === \'admin\'">👑</span>          <span *ngIf="usuarioActivo.rol !== \'admin\'">👤</span>          {{ usuarioActivo.nombre }}        </span>        <a routerLink="/admin" class="btn-registro me-2"          *ngIf="usuarioActivo.rol === \'admin\'">Panel Admin</a>        <a routerLink="/perfil" class="btn-limpiar me-2">Mi perfil</a>        <button (click)="cerrarSesion()" class="btn-limpiar">Cerrar sesión</button>      </ng-container>      <ng-template #sinSesion>        <a routerLink="/login" class="btn-registro me-2">Iniciar sesión</a>        <a routerLink="/registro" class="btn-limpiar">Crear cuenta</a>      </ng-template>    </div>  </div></header><nav class="breadcrumb">  <a routerLink="/">← Inicio</a>  <a routerLink="/login" *ngIf="!usuarioActivo">Login</a>  <a routerLink="/registro" *ngIf="!usuarioActivo">Registro</a>  <a routerLink="/recuperar" *ngIf="!usuarioActivo">Recuperar contraseña</a>  <a routerLink="/perfil" *ngIf="usuarioActivo">Mi perfil</a>  <a routerLink="/admin" *ngIf="usuarioActivo?.rol === \'admin\'">Panel Admin</a>  <a routerLink="/carrito">🛒 Carrito</a></nav></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CategoriasComponent', 'selector': 'app-categorias'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'NavbarComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'NavbarComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -3,6 +3,14 @@ import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 
+/**
+ *  Validador personalizado a nivel de formulario que comprueba
+ * que la contraseña y su confirmación coincidan, solo cuando el usuario
+ * decide cambiar la contraseña.
+ * @param control Grupo de controles del formulario de perfil.
+ * @returns Un objeto de error `{ passwordsNoCoinciden: true }` si no
+ * coinciden, o `null` si son iguales o están vacías.
+ */
 function passwordsIgualesValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
   const password2 = control.get('password2')?.value;
@@ -12,6 +20,14 @@ function passwordsIgualesValidator(control: AbstractControl): ValidationErrors |
   return null;
 }
 
+/**
+ *  Validador personalizado que exige que la contraseña contenga
+ * al menos una mayúscula y un número. No valida si el campo está vacío, ya
+ * que cambiar la contraseña en el perfil es opcional.
+ * @param control Control del formulario que contiene la contraseña.
+ * @returns Un objeto de error `{ passwordInsegura: true }` si falta mayúscula
+ * o número, o `null` si es segura o está vacía.
+ */
 function passwordSeguraValidator(control: AbstractControl): ValidationErrors | null {
   const valor = control.value;
   if (!valor) return null;
@@ -24,6 +40,13 @@ function passwordSeguraValidator(control: AbstractControl): ValidationErrors | n
   return null;
 }
 
+/**
+ *  Validador personalizado que verifica que el usuario tenga al
+ * menos 13 años a partir de su fecha de nacimiento.
+ * @param control Control del formulario que contiene la fecha de nacimiento.
+ * @returns Un objeto de error `{ edadMinima: true }` si la edad es menor a
+ * 13 años, o `null` si cumple con la edad mínima.
+ */
 function edadMinimaValidator(control: AbstractControl): ValidationErrors | null {
   const fecha = control.value;
   if (!fecha) return null;
@@ -39,6 +62,12 @@ function edadMinimaValidator(control: AbstractControl): ValidationErrors | null 
   return edad < 13 ? { edadMinima: true } : null;
 }
 
+/**
+ *  Componente que permite a un usuario autenticado visualizar y
+ * modificar los datos de su perfil. Carga la sesión activa desde
+ * sessionStorage, precarga los datos en el formulario y guarda los cambios
+ * tanto en localStorage como en la sesión activa.
+ */
 @Component({
   selector: 'app-perfil',
   imports: [RouterLink, CommonModule, ReactiveFormsModule],
@@ -85,10 +114,19 @@ export class PerfilComponent {
   get password2() { return this.perfilForm.get('password2'); }
   get fecha() { return this.perfilForm.get('fecha'); }
 
+  /**
+   *  Alterna la visibilidad de la contraseña entre texto visible
+   * y oculto.
+   */
   togglePassword() {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
+  /**
+   *  Guarda los cambios del perfil. Valida el formulario, actualiza
+   * los datos del usuario en localStorage y en la sesión activa, y actualiza la
+   * contraseña solo si el usuario ingresó una nueva.
+   */
   onSubmit() {
     this.mensajeExito = '';
 
@@ -118,6 +156,10 @@ export class PerfilComponent {
     this.mensajeExito = '¡Perfil actualizado exitosamente!';
   }
 
+  /**
+   *  Cierra la sesión del usuario, limpia sessionStorage y redirige
+   * al formulario de login.
+   */
   cerrarSesion() {
     sessionStorage.clear();
     this.router.navigate(['/login']);

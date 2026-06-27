@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+/**
+ *  Componente que muestra los juegos de una categoría específica.
+ * Lee el identificador de la categoría desde los parámetros de la ruta, busca
+ * sus juegos en los datos estáticos y permite agregar juegos al carrito,
+ * validando previamente que exista una sesión activa.
+ */
 @Component({
   selector: 'app-categorias',
   imports: [RouterLink, CommonModule],
@@ -145,28 +151,33 @@ export class CategoriasComponent {
     });
   }
 
+  /**
+   *  Agrega un juego al carrito de compras. Verifica que exista una
+   * sesión activa; si no la hay, redirige al login. Si el juego ya está en el
+   * carrito, incrementa su cantidad; de lo contrario, lo agrega como nuevo.
+   * @param juego Objeto del juego que se desea agregar al carrito.
+   */
   agregarAlCarrito(juego: any) {
-  // Verificar si hay sesión activa
-  const usuarioActivo = sessionStorage.getItem('usuarioActivo');
-  if (!usuarioActivo) {
-    alert('Debes iniciar sesión para agregar productos al carrito');
-    this.router.navigate(['/login']);
-    return;
+    const usuarioActivo = sessionStorage.getItem('usuarioActivo');
+    if (!usuarioActivo) {
+      alert('Debes iniciar sesión para agregar productos al carrito');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    const index = carrito.findIndex((item: any) => item.nombre === juego.nombre);
+
+    if (index !== -1) {
+      carrito[index].cantidad++;
+    } else {
+      carrito.push({ ...juego, cantidad: 1 });
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    this.mensajeAgregado = `✅ ${juego.nombre} agregado al carrito`;
+    setTimeout(() => {
+      this.mensajeAgregado = '';
+    }, 2000);
   }
-
-  const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-  const index = carrito.findIndex((item: any) => item.nombre === juego.nombre);
-
-  if (index !== -1) {
-    carrito[index].cantidad++;
-  } else {
-    carrito.push({ ...juego, cantidad: 1 });
-  }
-
-  localStorage.setItem('carrito', JSON.stringify(carrito));
-  this.mensajeAgregado = `✅ ${juego.nombre} agregado al carrito`;
-  setTimeout(() => {
-    this.mensajeAgregado = '';
-  }, 2000);
-}
 }

@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+/**
+ *  Componente de la página principal de TableTop Kingdom. Muestra
+ * el listado de categorías de juegos disponibles, cada una con su imagen y un
+ * enlace hacia su sección correspondiente.
+ */
 @Component({
   selector: 'app-inicio',
   imports: [RouterLink, CommonModule],

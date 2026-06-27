@@ -3,6 +3,12 @@ import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+/**
+ *  Componente encargado del inicio de sesión de usuarios en
+ * TableTop Kingdom. Valida las credenciales contra los usuarios almacenados
+ * en localStorage y, según el rol del usuario, redirige al panel de
+ * administración o a la página de inicio.
+ */
 @Component({
   selector: 'app-login',
   imports: [RouterLink, CommonModule, ReactiveFormsModule],
@@ -15,9 +21,13 @@ export class LoginComponent {
   errorLogin: string = '';
   mostrarPassword: boolean = false;
 
-togglePassword() {
-  this.mostrarPassword = !this.mostrarPassword;
-}
+  /**
+   *  Alterna la visibilidad de la contraseña en el formulario,
+   * mostrándola como texto o como puntos ocultos.
+   */
+  togglePassword() {
+    this.mostrarPassword = !this.mostrarPassword;
+  }
 
   usuariosPorDefecto = [
     {
@@ -54,6 +64,11 @@ togglePassword() {
   get correo() { return this.loginForm.get('correo'); }
   get password() { return this.loginForm.get('password'); }
 
+  /**
+   *  Procesa el inicio de sesión. Valida el formulario, busca el
+   * usuario por correo y contraseña, guarda la sesión activa en sessionStorage
+   * y redirige según el rol (admin o cliente).
+   */
   onSubmit() {
     this.errorLogin = '';
 
@@ -81,6 +96,10 @@ togglePassword() {
     }
   }
 
+  /**
+   *  Limpia los campos del formulario de login y borra el mensaje
+   * de error en caso de existir.
+   */
   onLimpiar() {
     this.loginForm.reset();
     this.errorLogin = '';
