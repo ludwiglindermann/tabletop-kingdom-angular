@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { JuegoCardComponent } from '../juego-card/juego-card';
 
 /**
- *  Componente que muestra los juegos de una categoría específica.
- * Lee el identificador de la categoría desde los parámetros de la ruta, busca
- * sus juegos en los datos estáticos y permite agregar juegos al carrito,
+ * Componente que muestra los juegos de una categoría específica. Lee el
+ * identificador de la categoría desde los parámetros de la ruta, busca sus
+ * juegos en los datos estáticos y permite agregar juegos al carrito,
  * validando previamente que exista una sesión activa.
  */
 @Component({
   selector: 'app-categorias',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, JuegoCardComponent],
   templateUrl: './categorias.html',
   styleUrl: './categorias.css'
 })
@@ -152,9 +153,11 @@ export class CategoriasComponent {
   }
 
   /**
-   *  Agrega un juego al carrito de compras. Verifica que exista una
-   * sesión activa; si no la hay, redirige al login. Si el juego ya está en el
-   * carrito, incrementa su cantidad; de lo contrario, lo agrega como nuevo.
+   * Agrega un juego al carrito de compras. Verifica que exista una sesión
+   * activa; si no la hay, redirige al login. Si el juego ya está en el carrito,
+   * incrementa su cantidad; de lo contrario, lo agrega como nuevo.
+   * Este método se ejecuta cuando el componente hijo (ficha de juego) emite
+   * el evento 'agregar'.
    * @param juego Objeto del juego que se desea agregar al carrito.
    */
   agregarAlCarrito(juego: any) {
