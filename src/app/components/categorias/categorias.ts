@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { JuegoCardComponent } from '../juego-card/juego-card';
 
 /**
  * Componente que muestra los juegos de una categoría específica. Lee el
  * identificador de la categoría desde los parámetros de la ruta, busca sus
- * juegos en los datos estáticos y permite agregar juegos al carrito,
- * validando previamente que exista una sesión activa.
+ * juegos en los datos estáticos, permite filtrarlos por nombre mediante un
+ * buscador (ngModel) y agregarlos al carrito validando la sesión activa.
  */
 @Component({
   selector: 'app-categorias',
-  imports: [RouterLink, CommonModule, JuegoCardComponent],
+  imports: [RouterLink, CommonModule, FormsModule, JuegoCardComponent],
   templateUrl: './categorias.html',
   styleUrl: './categorias.css'
 })
@@ -19,6 +20,9 @@ export class CategoriasComponent {
 
   categoriaActual: string = '';
   mensajeAgregado: string = '';
+
+  /** Texto ingresado por el usuario en el buscador para filtrar los juegos por nombre. */
+  filtroBusqueda: string = '';
 
   todasLasCategorias: any = {
     estrategia: {
@@ -149,7 +153,25 @@ export class CategoriasComponent {
     this.route.params.subscribe(params => {
       this.categoriaActual = params['id'];
       this.categoriaData = this.todasLasCategorias[this.categoriaActual];
+      this.filtroBusqueda = '';
     });
+  }
+
+  /**
+   * Devuelve la lista de juegos de la categoría filtrada según el texto del
+   * buscador. Si el buscador está vacío, devuelve todos los juegos.
+   */
+  get juegosFiltrados(): any[] {
+    if (!this.categoriaData) {
+      return [];
+    }
+    const texto = this.filtroBusqueda.trim().toLowerCase();
+    if (!texto) {
+      return this.categoriaData.juegos;
+    }
+    return this.categoriaData.juegos.filter((juego: any) =>
+      juego.nombre.toLowerCase().includes(texto)
+    );
   }
 
   /**
