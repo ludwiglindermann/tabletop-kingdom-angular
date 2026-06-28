@@ -41,4 +41,16 @@ describe('RegistroComponent', () => {
     component.onLimpiar();
     expect(component.registroForm.controls['nombre'].value).toBeNull();
   });
+
+  // PRUEBA UNITARIA 3: la contraseña debe marcarse como insegura si no tiene mayúscula ni número
+  it('debería marcar la contraseña como insegura si no tiene mayúscula ni número', () => {
+    component.registroForm.controls['password'].setValue('password');
+    expect(component.registroForm.controls['password'].errors?.['passwordInsegura']).toBe(true);
+  });
+
+  // PRUEBA UNITARIA 4: la fecha debe ser inválida si el usuario es menor de 13 años
+  it('debería marcar la fecha como inválida si el usuario es menor de 13 años', () => {
+    component.registroForm.controls['fecha'].setValue('2020-01-01');
+    expect(component.registroForm.controls['fecha'].errors?.['edadMinima']).toBe(true);
+  });
 });
