@@ -1,5 +1,14 @@
 <main>
-  <section class="intro" *ngIf="categoriaData">
+
+  <div *ngIf="cargando" class="alert alert-info text-center m-4">
+    Cargando juegos...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger text-center m-4">
+    {{ error }}
+  </div>
+
+  <section class="intro" *ngIf="!cargando && categoriaData">
     <h2>{{ categoriaData.nombre }}</h2>
     <p>{{ categoriaData.descripcion }}</p>
   </section>
@@ -9,7 +18,7 @@
     {{ mensajeAgregado }}
   </div>
 
-  <section class="container mt-4" *ngIf="categoriaData">
+  <section class="container mt-4" *ngIf="!cargando && categoriaData">
 
     <div class="row justify-content-center mb-4">
       <div class="col-12 col-md-8 col-lg-6">
@@ -40,7 +49,7 @@
 
   </section>
 
-  <section class="intro" *ngIf="!categoriaData">
+  <section class="intro" *ngIf="!cargando && !error && !categoriaData">
     <h2>Categoría no encontrada</h2>
     <p>La categoría que buscas no existe.</p>
     <a routerLink="/" class="btn-registro mt-3">Volver al inicio</a>

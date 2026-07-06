@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JuegoCardComponent } from '../juego-card/juego-card';
+import { Datos } from '../../services/datos';
 
 /**
  * Componente que muestra los juegos de una categoría específica. Lee el
- * identificador de la categoría desde los parámetros de la ruta, busca sus
- * juegos en los datos estáticos, permite filtrarlos por nombre mediante un
- * buscador (ngModel) y agregarlos al carrito validando la sesión activa.
+ * identificador de la categoría desde la ruta, obtiene los juegos desde un
+ * archivo JSON mediante el servicio Datos, permite filtrarlos por nombre con
+ * un buscador (ngModel) y agregarlos al carrito validando la sesión activa.
  */
 @Component({
   selector: 'app-categorias',
@@ -16,7 +17,7 @@ import { JuegoCardComponent } from '../juego-card/juego-card';
   templateUrl: './categorias.html',
   styleUrl: './categorias.css'
 })
-export class CategoriasComponent {
+export class CategoriasComponent implements OnInit {
 
   categoriaActual: string = '';
   mensajeAgregado: string = '';
@@ -24,136 +25,46 @@ export class CategoriasComponent {
   /** Texto ingresado por el usuario en el buscador para filtrar los juegos por nombre. */
   filtroBusqueda: string = '';
 
-  todasLasCategorias: any = {
-    estrategia: {
-      nombre: 'Estrategia 🧠',
-      descripcion: 'Pon a prueba tu mente con estos juegos de planificación y táctica.',
-      juegos: [
-        {
-          nombre: 'Catan',
-          descripcion: 'Construye asentamientos, recolecta recursos y domina la isla de Catan antes que tus rivales.',
-          precio: '$24.990',
-          descuento: true,
-          textoDescuento: '🔥 10% descuento',
-          imagen: 'images/juego-catan.jpg'
-        },
-        {
-          nombre: 'Pandemic',
-          descripcion: 'Trabaja en equipo para detener la propagación de enfermedades mortales alrededor del mundo.',
-          precio: '$29.990',
-          descuento: false,
-          textoDescuento: '',
-          imagen: 'images/juego-pandemic.jpg'
-        },
-        {
-          nombre: 'Ticket to Ride',
-          descripcion: 'Conecta ciudades con rutas de tren y acumula puntos antes de que tus oponentes bloqueen el camino.',
-          precio: '$27.490',
-          descuento: true,
-          textoDescuento: '🔥 15% descuento',
-          imagen: 'images/juego-ticket.jpg'
-        }
-      ]
-    },
-    familia: {
-      nombre: 'Familia 🎲',
-      descripcion: 'Diversión garantizada para toda la familia en cada reunión.',
-      juegos: [
-        {
-          nombre: 'UNO',
-          descripcion: 'El clásico juego de cartas donde debes deshacerte de todas tus cartas antes que los demás.',
-          precio: '$7.990',
-          descuento: true,
-          textoDescuento: '🔥 20% descuento',
-          imagen: 'images/juego-uno.jpg'
-        },
-        {
-          nombre: 'Jenga',
-          descripcion: 'Extrae bloques de madera sin derribar la torre. El clásico juego de pulso y concentración.',
-          precio: '$9.990',
-          descuento: false,
-          textoDescuento: '',
-          imagen: 'images/juego-jenga.jpg'
-        },
-        {
-          nombre: 'Monopoly',
-          descripcion: 'Compra propiedades, construye casas y hoteles, y arruina a tus oponentes.',
-          precio: '$19.990',
-          descuento: true,
-          textoDescuento: '🔥 5% descuento',
-          imagen: 'images/juego-monopoly.jpg'
-        }
-      ]
-    },
-    cartas: {
-      nombre: 'Cartas 🃏',
-      descripcion: 'Estrategia, suerte y habilidad en cada mazo.',
-      juegos: [
-        {
-          nombre: 'Pokémon Cards',
-          descripcion: 'Colecciona y batalla con cartas de tus Pokémon favoritos.',
-          precio: '$14.990',
-          descuento: true,
-          textoDescuento: '🔥 10% descuento',
-          imagen: 'images/juego-pokemon.jpg'
-        },
-        {
-          nombre: 'Exploding Kittens',
-          descripcion: 'Evita robar al gatito explosivo usando cartas de acción. Divertido y adictivo.',
-          precio: '$16.990',
-          descuento: false,
-          textoDescuento: '',
-          imagen: 'images/juego-kittens.jpg'
-        },
-        {
-          nombre: 'Poker',
-          descripcion: 'El clásico juego de cartas de apuestas y estrategia.',
-          precio: '$12.990',
-          descuento: true,
-          textoDescuento: '🔥 12% descuento',
-          imagen: 'images/juego-poker.jpg'
-        }
-      ]
-    },
-    misterio: {
-      nombre: 'Misterio 🔍',
-      descripcion: 'Investiga, deduce y resuelve los enigmas antes que nadie.',
-      juegos: [
-        {
-          nombre: 'Cluedo',
-          descripcion: 'Descubre quién cometió el crimen, con qué arma y en qué habitación.',
-          precio: '$18.990',
-          descuento: true,
-          textoDescuento: '🔥 15% descuento',
-          imagen: 'images/juego-cluedo.jpg'
-        },
-        {
-          nombre: 'Dungeons & Dragons',
-          descripcion: 'Embárcate en épicas aventuras de rol y fantasía.',
-          precio: '$32.990',
-          descuento: false,
-          textoDescuento: '',
-          imagen: 'images/juego-dragons.jpg'
-        },
-        {
-          nombre: 'Codenames',
-          descripcion: 'Dos equipos compiten para descubrir a sus agentes secretos usando pistas.',
-          precio: '$26.490',
-          descuento: true,
-          textoDescuento: '🔥 8% descuento',
-          imagen: 'images/juego-codenames.jpg'
-        }
-      ]
-    }
-  };
+  /** Objeto con todas las categorías y sus juegos, recibido desde el archivo JSON. */
+  todasLasCategorias: any = {};
 
+  /** Datos de la categoría actualmente seleccionada. */
   categoriaData: any = null;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
-    this.route.params.subscribe(params => {
-      this.categoriaActual = params['id'];
-      this.categoriaData = this.todasLasCategorias[this.categoriaActual];
-      this.filtroBusqueda = '';
+  /** Indica si los datos aún se están cargando. */
+  cargando: boolean = true;
+
+  /** Mensaje de error en caso de que falle la carga de datos. */
+  error: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private datosService: Datos,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+  /**
+   * Al iniciar el componente, solicita los juegos al servicio. Una vez recibidos,
+   * observa el parámetro de la ruta para mostrar la categoría correspondiente.
+   */
+  ngOnInit(): void {
+    this.datosService.getJuegos().subscribe({
+      next: (datos) => {
+        this.todasLasCategorias = datos;
+        this.cargando = false;
+        this.route.params.subscribe(params => {
+          this.categoriaActual = params['id'];
+          this.categoriaData = this.todasLasCategorias[this.categoriaActual];
+          this.filtroBusqueda = '';
+        });
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.error = 'No se pudieron cargar los juegos.';
+        this.cargando = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 

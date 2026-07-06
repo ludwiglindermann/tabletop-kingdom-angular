@@ -5,7 +5,16 @@
   </section>
 
   <section class="container mt-4">
-    <div class="row g-4 justify-content-center">
+
+    <div *ngIf="cargando" class="alert alert-info text-center">
+      Cargando categorías...
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger text-center">
+      {{ error }}
+    </div>
+
+    <div class="row g-4 justify-content-center" *ngIf="!cargando && !error">
 
       <div class="col-12 col-md-6 col-lg-3"
         *ngFor="let categoria of categorias">

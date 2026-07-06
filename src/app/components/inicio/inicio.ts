@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Datos } from '../../services/datos';
 
 /**
- *  Componente de la página principal de TableTop Kingdom. Muestra
- * el listado de categorías de juegos disponibles, cada una con su imagen y un
- * enlace hacia su sección correspondiente.
+ * Componente de la página principal de TableTop Kingdom. Muestra el listado de
+ * categorías de juegos disponibles, que ahora se cargan dinámicamente desde un
+ * archivo JSON a través del servicio Datos.
  */
 @Component({
   selector: 'app-inicio',
@@ -13,32 +14,36 @@ import { CommonModule } from '@angular/common';
   templateUrl: './inicio.html',
   styleUrl: './inicio.css'
 })
-export class InicioComponent {
+export class InicioComponent implements OnInit {
 
-  categorias = [
-    {
-      id: 'estrategia',
-      nombre: 'Estrategia',
-      descripcion: 'Juegos de planificación y táctica',
-      imagen: 'images/categoria-estrategia.jpg'
-    },
-    {
-      id: 'familia',
-      nombre: 'Familia',
-      descripcion: 'Juegos para jugar en grupo',
-      imagen: 'images/categoria-familia.jpg'
-    },
-    {
-      id: 'cartas',
-      nombre: 'Cartas',
-      descripcion: 'Juegos de naipes y mazos',
-      imagen: 'images/categoria-cartas.jpg'
-    },
-    {
-      id: 'misterio',
-      nombre: 'Misterio',
-      descripcion: 'Juegos de deducción e investigación',
-      imagen: 'images/categoria-misterio.jpg'
-    }
-  ];
+  /** Lista de categorías recibidas desde el archivo JSON. */
+  categorias: any[] = [];
+
+  /** Indica si los datos aún se están cargando. */
+  cargando: boolean = true;
+
+  /** Mensaje de error en caso de que falle la carga de datos. */
+  error: string = '';
+
+  constructor(private datosService: Datos, private cdr: ChangeDetectorRef) { }
+
+  /**
+   * Al iniciar el componente, solicita las categorías al servicio y las guarda
+   * para mostrarlas en la vista. Controla los estados de carga y error, y
+   * actualiza la vista cuando los datos llegan.
+   */
+  ngOnInit(): void {
+    this.datosService.getCategorias().subscribe({
+      next: (datos) => {
+        this.categorias = datos;
+        this.cargando = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.error = 'No se pudieron cargar las categorías.';
+        this.cargando = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 }
