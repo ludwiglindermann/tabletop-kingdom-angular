@@ -1,0 +1,32 @@
+<main>
+  <section class="intro">
+    <h2>🔥 Ofertas de la semana</h2>
+    <p>Aprovecha nuestros juegos con descuento por tiempo limitado.</p>
+  </section>
+
+  <div *ngIf="cargando" class="alert alert-info text-center m-4">
+    Cargando ofertas...
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger text-center m-4">
+    {{ error }}
+  </div>
+
+  <section class="container mt-4" *ngIf="!cargando && !error">
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-12 col-md-6 col-lg-4"
+        *ngFor="let juego of juegosEnOferta">
+        <app-juego-card
+          [juego]="juego"
+          (agregar)="agregarAlCarrito($event)">
+        </app-juego-card>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-4" *ngIf="juegosEnOferta.length === 0">
+      <p>No hay ofertas disponibles en este momento.</p>
+    </div>
+  </section>
+</main>
