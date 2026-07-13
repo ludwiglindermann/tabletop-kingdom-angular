@@ -38,7 +38,7 @@ export class CarritoComponent {
    */
   calcularTotal() {
     this.total = this.carrito.reduce((acc: number, item: any) => {
-      const precio = parseInt(item.precio.replace(/\./g, '').replace('$', ''));
+      const precio = Number(item.precio);
       return acc + precio * item.cantidad;
     }, 0);
   }
