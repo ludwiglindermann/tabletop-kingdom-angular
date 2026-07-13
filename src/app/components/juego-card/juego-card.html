@@ -3,9 +3,9 @@
   <div class="game-info">
     <h3>{{ juego.nombre }}</h3>
     <p class="description">{{ juego.descripcion }}</p>
-    <p class="price">{{ juego.precio }}</p>
+    <p class="price">${{ juego.precio | number:'1.0-0' }}</p>
     <span class="badge-descuento" *ngIf="juego.descuento">
-      {{ juego.textoDescuento }}
+      🔥 En oferta
     </span>
     <span class="badge-regular" *ngIf="!juego.descuento">
       Precio regular

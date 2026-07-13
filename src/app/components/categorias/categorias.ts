@@ -7,9 +7,9 @@ import { Datos } from '../../services/datos';
 
 /**
  * Componente que muestra los juegos de una categoría específica. Lee el
- * identificador de la categoría desde la ruta, obtiene los juegos desde un
- * archivo JSON mediante el servicio Datos, permite filtrarlos por nombre con
- * un buscador (ngModel) y agregarlos al carrito validando la sesión activa.
+ * identificador de la categoría desde la ruta, obtiene los juegos desde
+ * Firebase mediante el servicio Datos, los filtra por categoría, permite
+ * buscarlos por nombre (ngModel) y agregarlos al carrito.
  */
 @Component({
   selector: 'app-categorias',
@@ -25,11 +25,16 @@ export class CategoriasComponent implements OnInit {
   /** Texto ingresado por el usuario en el buscador para filtrar los juegos por nombre. */
   filtroBusqueda: string = '';
 
-  /** Objeto con todas las categorías y sus juegos, recibido desde el archivo JSON. */
-  todasLasCategorias: any = {};
+  /** Lista completa de juegos recibida desde Firebase. */
+  todosLosJuegos: any[] = [];
 
-  /** Datos de la categoría actualmente seleccionada. */
-  categoriaData: any = null;
+  /** Nombres visibles de cada categoría. */
+  nombresCategorias: any = {
+    estrategia: 'Estrategia 🧠',
+    familia: 'Familia 🎲',
+    cartas: 'Cartas 🃏',
+    misterio: 'Misterio 🔍'
+  };
 
   /** Indica si los datos aún se están cargando. */
   cargando: boolean = true;
@@ -45,17 +50,16 @@ export class CategoriasComponent implements OnInit {
   ) { }
 
   /**
-   * Al iniciar el componente, solicita los juegos al servicio. Una vez recibidos,
-   * observa el parámetro de la ruta para mostrar la categoría correspondiente.
+   * Al iniciar el componente, solicita todos los juegos al servicio. Una vez
+   * recibidos, observa el parámetro de la ruta para saber qué categoría mostrar.
    */
   ngOnInit(): void {
     this.datosService.getJuegos().subscribe({
       next: (datos) => {
-        this.todasLasCategorias = datos;
+        this.todosLosJuegos = (datos || []).filter((j: any) => j !== null);
         this.cargando = false;
         this.route.params.subscribe(params => {
           this.categoriaActual = params['id'];
-          this.categoriaData = this.todasLasCategorias[this.categoriaActual];
           this.filtroBusqueda = '';
         });
         this.cdr.detectChanges();
@@ -68,29 +72,28 @@ export class CategoriasComponent implements OnInit {
     });
   }
 
+  /** Devuelve el nombre visible de la categoría actual. */
+  get nombreCategoria(): string {
+    return this.nombresCategorias[this.categoriaActual] || this.categoriaActual;
+  }
+
   /**
-   * Devuelve la lista de juegos de la categoría filtrada según el texto del
-   * buscador. Si el buscador está vacío, devuelve todos los juegos.
+   * Devuelve los juegos de la categoría actual, aplicando además el filtro de
+   * búsqueda por nombre si el usuario escribió algo en el buscador.
    */
   get juegosFiltrados(): any[] {
-    if (!this.categoriaData) {
-      return [];
-    }
+    let lista = this.todosLosJuegos.filter(j => j.categoria === this.categoriaActual);
     const texto = this.filtroBusqueda.trim().toLowerCase();
-    if (!texto) {
-      return this.categoriaData.juegos;
+    if (texto) {
+      lista = lista.filter(j => j.nombre.toLowerCase().includes(texto));
     }
-    return this.categoriaData.juegos.filter((juego: any) =>
-      juego.nombre.toLowerCase().includes(texto)
-    );
+    return lista;
   }
 
   /**
    * Agrega un juego al carrito de compras. Verifica que exista una sesión
    * activa; si no la hay, redirige al login. Si el juego ya está en el carrito,
    * incrementa su cantidad; de lo contrario, lo agrega como nuevo.
-   * Este método se ejecuta cuando el componente hijo (ficha de juego) emite
-   * el evento 'agregar'.
    * @param juego Objeto del juego que se desea agregar al carrito.
    */
   agregarAlCarrito(juego: any) {

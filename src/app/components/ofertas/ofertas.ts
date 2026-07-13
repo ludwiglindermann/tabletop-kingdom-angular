@@ -6,9 +6,8 @@ import { Datos } from '../../services/datos';
 
 /**
  * Componente que muestra una página de ofertas con todos los juegos que tienen
- * descuento. Consume los datos desde el archivo juegos.json a través del
- * servicio Datos, recorre todas las categorías y filtra únicamente los juegos
- * en oferta, reutilizando el componente de ficha de juego.
+ * descuento. Consume los datos desde Firebase a través del servicio Datos y
+ * filtra únicamente los juegos en oferta, reutilizando la ficha de juego.
  */
 @Component({
   selector: 'app-ofertas',
@@ -18,7 +17,7 @@ import { Datos } from '../../services/datos';
 })
 export class OfertasComponent implements OnInit {
 
-  /** Lista de juegos con descuento reunidos desde todas las categorías. */
+  /** Lista de juegos con descuento. */
   juegosEnOferta: any[] = [];
 
   /** Indica si los datos aún se están cargando. */
@@ -34,22 +33,14 @@ export class OfertasComponent implements OnInit {
   ) { }
 
   /**
-   * Al iniciar el componente, solicita los juegos al servicio, recorre todas
-   * las categorías y guarda solo los juegos que tienen descuento.
+   * Al iniciar el componente, solicita los juegos a Firebase y guarda solo los
+   * que tienen descuento.
    */
   ngOnInit(): void {
     this.datosService.getJuegos().subscribe({
       next: (datos) => {
-        const listaOfertas: any[] = [];
-        for (const clave of Object.keys(datos)) {
-          const juegosCategoria = datos[clave].juegos;
-          for (const juego of juegosCategoria) {
-            if (juego.descuento) {
-              listaOfertas.push(juego);
-            }
-          }
-        }
-        this.juegosEnOferta = listaOfertas;
+        const lista = (datos || []).filter((j: any) => j !== null);
+        this.juegosEnOferta = lista.filter((juego: any) => juego.descuento);
         this.cargando = false;
         this.cdr.detectChanges();
       },

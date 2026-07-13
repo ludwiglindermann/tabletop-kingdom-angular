@@ -8,9 +8,8 @@
     {{ error }}
   </div>
 
-  <section class="intro" *ngIf="!cargando && categoriaData">
-    <h2>{{ categoriaData.nombre }}</h2>
-    <p>{{ categoriaData.descripcion }}</p>
+  <section class="intro" *ngIf="!cargando && !error">
+    <h2>{{ nombreCategoria }}</h2>
   </section>
 
   <div *ngIf="mensajeAgregado" class="text-center py-2"
@@ -18,7 +17,7 @@
     {{ mensajeAgregado }}
   </div>
 
-  <section class="container mt-4" *ngIf="!cargando && categoriaData">
+  <section class="container mt-4" *ngIf="!cargando && !error">
 
     <div class="row justify-content-center mb-4">
       <div class="col-12 col-md-8 col-lg-6">
@@ -44,15 +43,9 @@
     </div>
 
     <div class="text-center mt-4" *ngIf="juegosFiltrados.length === 0">
-      <p>No se encontraron juegos que coincidan con "{{ filtroBusqueda }}".</p>
+      <p>No se encontraron juegos en esta categoría.</p>
     </div>
 
-  </section>
-
-  <section class="intro" *ngIf="!cargando && !error && !categoriaData">
-    <h2>Categoría no encontrada</h2>
-    <p>La categoría que buscas no existe.</p>
-    <a routerLink="/" class="btn-registro mt-3">Volver al inicio</a>
   </section>
 
 </main>

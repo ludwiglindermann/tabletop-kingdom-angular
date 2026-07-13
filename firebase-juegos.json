@@ -1,0 +1,112 @@
+{
+  "juegos": [
+    {
+      "id": 1,
+      "categoria": "estrategia",
+      "nombre": "Catan",
+      "descripcion": "Construye asentamientos, recolecta recursos y domina la isla de Catan antes que tus rivales.",
+      "precio": 24990,
+      "descuento": true,
+      "imagen": "images/juego-catan.jpg"
+    },
+    {
+      "id": 2,
+      "categoria": "estrategia",
+      "nombre": "Pandemic",
+      "descripcion": "Trabaja en equipo para detener la propagación de enfermedades mortales alrededor del mundo.",
+      "precio": 29990,
+      "descuento": false,
+      "imagen": "images/juego-pandemic.jpg"
+    },
+    {
+      "id": 3,
+      "categoria": "estrategia",
+      "nombre": "Ticket to Ride",
+      "descripcion": "Conecta ciudades con rutas de tren y acumula puntos antes de que tus oponentes bloqueen el camino.",
+      "precio": 27490,
+      "descuento": true,
+      "imagen": "images/juego-ticket.jpg"
+    },
+    {
+      "id": 4,
+      "categoria": "familia",
+      "nombre": "UNO",
+      "descripcion": "El clásico juego de cartas donde debes deshacerte de todas tus cartas antes que los demás.",
+      "precio": 7990,
+      "descuento": true,
+      "imagen": "images/juego-uno.jpg"
+    },
+    {
+      "id": 5,
+      "categoria": "familia",
+      "nombre": "Jenga",
+      "descripcion": "Extrae bloques de madera sin derribar la torre. El clásico juego de pulso y concentración.",
+      "precio": 9990,
+      "descuento": false,
+      "imagen": "images/juego-jenga.jpg"
+    },
+    {
+      "id": 6,
+      "categoria": "familia",
+      "nombre": "Monopoly",
+      "descripcion": "Compra propiedades, construye casas y hoteles, y arruina a tus oponentes.",
+      "precio": 19990,
+      "descuento": true,
+      "imagen": "images/juego-monopoly.jpg"
+    },
+    {
+      "id": 7,
+      "categoria": "cartas",
+      "nombre": "Pokémon Cards",
+      "descripcion": "Colecciona y batalla con cartas de tus Pokémon favoritos.",
+      "precio": 14990,
+      "descuento": true,
+      "imagen": "images/juego-pokemon.jpg"
+    },
+    {
+      "id": 8,
+      "categoria": "cartas",
+      "nombre": "Exploding Kittens",
+      "descripcion": "Evita robar al gatito explosivo usando cartas de acción. Divertido y adictivo.",
+      "precio": 16990,
+      "descuento": false,
+      "imagen": "images/juego-kittens.jpg"
+    },
+    {
+      "id": 9,
+      "categoria": "cartas",
+      "nombre": "Poker",
+      "descripcion": "El clásico juego de cartas de apuestas y estrategia.",
+      "precio": 12990,
+      "descuento": true,
+      "imagen": "images/juego-poker.jpg"
+    },
+    {
+      "id": 10,
+      "categoria": "misterio",
+      "nombre": "Cluedo",
+      "descripcion": "Descubre quién cometió el crimen, con qué arma y en qué habitación.",
+      "precio": 18990,
+      "descuento": true,
+      "imagen": "images/juego-cluedo.jpg"
+    },
+    {
+      "id": 11,
+      "categoria": "misterio",
+      "nombre": "Dungeons & Dragons",
+      "descripcion": "Embárcate en épicas aventuras de rol y fantasía.",
+      "precio": 32990,
+      "descuento": false,
+      "imagen": "images/juego-dragons.jpg"
+    },
+    {
+      "id": 12,
+      "categoria": "misterio",
+      "nombre": "Codenames",
+      "descripcion": "Dos equipos compiten para descubrir a sus agentes secretos usando pistas.",
+      "precio": 26490,
+      "descuento": true,
+      "imagen": "images/juego-codenames.jpg"
+    }
+  ]
+}
