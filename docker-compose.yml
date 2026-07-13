@@ -1,0 +1,8 @@
+services:
+  tabletop:
+    build: .
+    container_name: tabletop-kingdom
+    ports:
+      - "8082:80"
+    environment:
+      - PORT=80
