@@ -2,7 +2,7 @@
 
   <section class="intro">
     <h2>Bienvenido, {{ usuarioActivo?.nombre }} 👑</h2>
-    <p>Desde aquí puedes gestionar los usuarios registrados en TableTop Kingdom.</p>
+    <p>Desde aquí puedes gestionar los usuarios y los juegos de TableTop Kingdom.</p>
   </section>
 
   <section class="container mt-4">
@@ -25,13 +25,19 @@
       </div>
 
       <div class="col-12 col-md-4">
-        <div class="admin-card">
-          <div class="admin-icon">🏆</div>
-          <h3>Juegos</h3>
-          <p>12 juegos disponibles</p>
-        </div>
+        <a routerLink="/admin-juegos" style="text-decoration: none; color: inherit;">
+          <div class="admin-card">
+            <div class="admin-icon">🏆</div>
+            <h3>Juegos</h3>
+            <p>Administrar catálogo →</p>
+          </div>
+        </a>
       </div>
 
+    </div>
+
+    <div class="text-center mb-5">
+      <a routerLink="/admin-juegos" class="btn-registro">🎲 Administrar juegos (crear, editar, eliminar)</a>
     </div>
 
     <div class="form-container">

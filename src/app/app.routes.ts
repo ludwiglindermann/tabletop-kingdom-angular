@@ -8,6 +8,7 @@ import { CategoriasComponent } from './components/categorias/categorias';
 import { AdminComponent } from './components/admin/admin';
 import { CarritoComponent } from './components/carrito/carrito';
 import { OfertasComponent } from './components/ofertas/ofertas';
+import { AdminJuegosComponent } from './components/admin-juegos/admin-juegos';
 
 /** Definición de las rutas de la aplicación, asociando cada dirección con su componente correspondiente. */
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'categorias/:id', component: CategoriasComponent },
   { path: 'ofertas', component: OfertasComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'admin-juegos', component: AdminJuegosComponent },
   { path: 'carrito', component: CarritoComponent },
   { path: '**', redirectTo: '' }
 ];
