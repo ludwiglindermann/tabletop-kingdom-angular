@@ -1,0 +1,82 @@
+========================================================
+TABLETOP KINGDOM - Evaluación Final Transversal (DSY2202)
+Estudiante: Ludwig Lindermann
+========================================================
+
+DESCRIPCIÓN
+-----------
+Aplicación FrontEnd desarrollada en Angular para una tienda de
+juegos de mesa (TableTop Kingdom). Permite explorar categorías y
+juegos, gestionar un carrito de compras con pago simulado, y
+administrar juegos y usuarios según el rol del usuario.
+
+TECNOLOGÍAS PRINCIPALES
+-----------------------
+- Angular 21 (Framework FrontEnd)
+- TypeScript
+- HTML5 y CSS3
+- Bootstrap 5 (diseño responsivo, grilla de 12 columnas)
+- Firebase Realtime Database (backend / API REST para los juegos)
+
+LIBRERÍAS ADICIONALES INSTALADAS
+--------------------------------
+- Bootstrap 5: framework de estilos y diseño responsivo.
+  Instalado con: npm install bootstrap
+  Configurado en angular.json (estilos y scripts).
+
+- @compodoc/compodoc: librería para generar la documentación
+  automática del proyecto a partir de comentarios JSDoc.
+  Instalado con: npm install --save-dev @compodoc/compodoc
+  Documentación generada en la carpeta: /documentation
+
+DOCUMENTACIÓN
+-------------
+La documentación del proyecto se generó con Compodoc y se
+encuentra en la carpeta "documentation". Para verla, abrir el
+archivo documentation/index.html en un navegador, o regenerarla
+con el comando:
+    npx compodoc -p tsconfig.doc.json -s
+
+BACKEND / CONSUMO DE JSON (ENDPOINTS)
+-------------------------------------
+La aplicación consume datos mediante dos fuentes JSON:
+
+1. Firebase Realtime Database (API REST con métodos GET, PUT, DELETE):
+   URL base: https://tabletop-kingdom-ludwig-default-rtdb.firebaseio.com
+   Endpoint de juegos: /juegos.json
+   - GET    -> listar juegos
+   - PUT    -> crear y actualizar juegos
+   - DELETE -> eliminar juegos
+   Consumido a través del servicio: src/app/services/datos.ts
+
+2. Archivo JSON local (categorías):
+   Ubicación: public/data/categorias.json
+   Consumido con GET a través del mismo servicio Datos.
+
+PRUEBAS UNITARIAS
+-----------------
+Implementadas con Jasmine y Karma (6 pruebas en el componente
+de registro + prueba del servicio). Ejecutar con:
+    ng test
+
+ROLES DE USUARIO
+----------------
+- Administrador: gestiona usuarios y juegos (crear, editar, eliminar).
+  Credenciales demo: admin@tabletop.cl / Admin123
+- Cliente: navega el catálogo, usa el carrito y realiza pago simulado.
+  Credenciales demo: cliente@tabletop.cl / Cliente123
+
+DESPLIEGUE EN LA NUBE
+---------------------
+La aplicación está desplegada con Docker en Render.
+URL pública: https://tabletop-kingdom-angular.onrender.com
+
+NOTA: El material del curso indicaba usar "Docker Lab" (Play with
+Docker) para el despliegue, pero esa plataforma dejó de estar
+disponible desde marzo de 2026. Por ese motivo, se desplegó la
+misma imagen Docker en Render, obteniendo igualmente una URL
+pública funcional.
+
+REPOSITORIO
+-----------
+GitHub: https://github.com/ludwiglindermann/tabletop-kingdom-angular

@@ -60,6 +60,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/AdminComponent.html" data-type="entity-link" >AdminComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/AdminJuegosComponent.html" data-type="entity-link" >AdminJuegosComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/App.html" data-type="entity-link" >App</a>
                             </li>
                             <li class="link">
@@ -84,6 +87,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/NavbarComponent.html" data-type="entity-link" >NavbarComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/OfertasComponent.html" data-type="entity-link" >OfertasComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/PerfilComponent.html" data-type="entity-link" >PerfilComponent</a>
                             </li>
                             <li class="link">
@@ -94,6 +100,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                         </ul>
                     </li>
+                        <li class="chapter">
+                            <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#injectables-links"' :
+                                'data-bs-target="#xs-injectables-links"' }>
+                                <span class="icon ion-md-arrow-round-down"></span>
+                                <span>Injectables</span>
+                                <span class="icon ion-ios-arrow-down"></span>
+                            </div>
+                            <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
+                                <li class="link">
+                                    <a href="injectables/Datos.html" data-type="entity-link" >Datos</a>
+                                </li>
+                            </ul>
+                        </li>
                     <li class="chapter">
                         <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#miscellaneous-links"'
                             : 'data-bs-target="#xs-miscellaneous-links"' }>

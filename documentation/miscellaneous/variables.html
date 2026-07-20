@@ -166,7 +166,8 @@
                         <i>Default value : </i><code>{
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+    provideRouter(routes),
+    provideHttpClient()
   ]
 }</code>
                     </td>
@@ -174,7 +175,7 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Configuración global de la aplicación Angular, incluyendo los proveedores de rutas.</p>
+                    <div class="io-description"><p>Configuración global de la aplicación Angular, incluyendo los proveedores de rutas y del cliente HTTP.</p>
 </div>
                 </td>
             </tr>
@@ -210,7 +211,9 @@
   { path: &#x27;recuperar&#x27;, component: RecuperarComponent },
   { path: &#x27;perfil&#x27;, component: PerfilComponent },
   { path: &#x27;categorias/:id&#x27;, component: CategoriasComponent },
+  { path: &#x27;ofertas&#x27;, component: OfertasComponent },
   { path: &#x27;admin&#x27;, component: AdminComponent },
+  { path: &#x27;admin-juegos&#x27;, component: AdminJuegosComponent },
   { path: &#x27;carrito&#x27;, component: CarritoComponent },
   { path: &#x27;**&#x27;, redirectTo: &#x27;&#x27; }
 ]</code>

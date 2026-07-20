@@ -142,13 +142,19 @@
         <h3>Description</h3>
     </p>
     <p class="comment">
-        <p> Componente de la página principal de TableTop Kingdom. Muestra
-el listado de categorías de juegos disponibles, cada una con su imagen y un
-enlace hacia su sección correspondiente.</p>
+        <p>Componente de la página principal de TableTop Kingdom. Muestra el listado de
+categorías de juegos disponibles, que ahora se cargan dinámicamente desde un
+archivo JSON a través del servicio Datos.</p>
 
     </p>
 
 
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
 
 
 <section data-compodoc="block-metadata">
@@ -217,7 +223,28 @@ enlace hacia su sección correspondiente.</p>
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#cargando" >cargando</a>
+                            </li>
+                            <li>
                                 <a href="#categorias" >categorias</a>
+                            </li>
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
                     </td>
@@ -227,22 +254,164 @@ enlace hacia su sección correspondiente.</p>
 
 
 
-
         </tbody>
     </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(datosService: <a href="../injectables/Datos.html" target="_self">Datos</a>, cdr: <a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/inicio/inicio.ts:26</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>datosService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Datos.html" target="_self" >Datos</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
 
 
 
 
 
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="35"
+                                    class="link-to-prism">src/app/components/inicio/inicio.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Al iniciar el componente, solicita las categorías al servicio y las guarda
+para mostrarlas en la vista. Controla los estados de carga y error, y
+actualiza la vista cuando los datos llegan.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
     <section data-compodoc="block-properties">
     
     <h3 id="inputs">
         Properties
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargando"></a>
+                    <span class="name">
+                        <span ><b>cargando</b></span>
+                        <a href="#cargando"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/components/inicio/inicio.ts:23</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indica si los datos aún se están cargando.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -256,46 +425,64 @@ enlace hacia su sección correspondiente.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>[]</code>
+                        <i>Type : </i>    <code>any[]</code>
 
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>[
-    {
-      id: &#x27;estrategia&#x27;,
-      nombre: &#x27;Estrategia&#x27;,
-      descripcion: &#x27;Juegos de planificación y táctica&#x27;,
-      imagen: &#x27;images/categoria-estrategia.jpg&#x27;
-    },
-    {
-      id: &#x27;familia&#x27;,
-      nombre: &#x27;Familia&#x27;,
-      descripcion: &#x27;Juegos para jugar en grupo&#x27;,
-      imagen: &#x27;images/categoria-familia.jpg&#x27;
-    },
-    {
-      id: &#x27;cartas&#x27;,
-      nombre: &#x27;Cartas&#x27;,
-      descripcion: &#x27;Juegos de naipes y mazos&#x27;,
-      imagen: &#x27;images/categoria-cartas.jpg&#x27;
-    },
-    {
-      id: &#x27;misterio&#x27;,
-      nombre: &#x27;Misterio&#x27;,
-      descripcion: &#x27;Juegos de deducción e investigación&#x27;,
-      imagen: &#x27;images/categoria-misterio.jpg&#x27;
-    }
-  ]</code>
+                        <i>Default value : </i><code>[]</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/inicio/inicio.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/inicio/inicio.ts:20</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de categorías recibidas desde el archivo JSON.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="error"></a>
+                    <span class="name">
+                        <span ><b>error</b></span>
+                        <a href="#error"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/inicio/inicio.ts:26</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Mensaje de error en caso de que falle la carga de datos.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -305,14 +492,15 @@ enlace hacia su sección correspondiente.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ChangeDetectorRef } from &#x27;@angular/core&#x27;;
 import { RouterLink } from &#x27;@angular/router&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Datos } from &#x27;../../services/datos&#x27;;
 
 /**
- *  Componente de la página principal de TableTop Kingdom. Muestra
- * el listado de categorías de juegos disponibles, cada una con su imagen y un
- * enlace hacia su sección correspondiente.
+ * Componente de la página principal de TableTop Kingdom. Muestra el listado de
+ * categorías de juegos disponibles, que ahora se cargan dinámicamente desde un
+ * archivo JSON a través del servicio Datos.
  */
 @Component({
   selector: &#x27;app-inicio&#x27;,
@@ -320,34 +508,38 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
   templateUrl: &#x27;./inicio.html&#x27;,
   styleUrl: &#x27;./inicio.css&#x27;
 })
-export class InicioComponent {
+export class InicioComponent implements OnInit {
 
-  categorias &#x3D; [
-    {
-      id: &#x27;estrategia&#x27;,
-      nombre: &#x27;Estrategia&#x27;,
-      descripcion: &#x27;Juegos de planificación y táctica&#x27;,
-      imagen: &#x27;images/categoria-estrategia.jpg&#x27;
-    },
-    {
-      id: &#x27;familia&#x27;,
-      nombre: &#x27;Familia&#x27;,
-      descripcion: &#x27;Juegos para jugar en grupo&#x27;,
-      imagen: &#x27;images/categoria-familia.jpg&#x27;
-    },
-    {
-      id: &#x27;cartas&#x27;,
-      nombre: &#x27;Cartas&#x27;,
-      descripcion: &#x27;Juegos de naipes y mazos&#x27;,
-      imagen: &#x27;images/categoria-cartas.jpg&#x27;
-    },
-    {
-      id: &#x27;misterio&#x27;,
-      nombre: &#x27;Misterio&#x27;,
-      descripcion: &#x27;Juegos de deducción e investigación&#x27;,
-      imagen: &#x27;images/categoria-misterio.jpg&#x27;
-    }
-  ];
+  /** Lista de categorías recibidas desde el archivo JSON. */
+  categorias: any[] &#x3D; [];
+
+  /** Indica si los datos aún se están cargando. */
+  cargando: boolean &#x3D; true;
+
+  /** Mensaje de error en caso de que falle la carga de datos. */
+  error: string &#x3D; &#x27;&#x27;;
+
+  constructor(private datosService: Datos, private cdr: ChangeDetectorRef) { }
+
+  /**
+   * Al iniciar el componente, solicita las categorías al servicio y las guarda
+   * para mostrarlas en la vista. Controla los estados de carga y error, y
+   * actualiza la vista cuando los datos llegan.
+   */
+  ngOnInit(): void {
+    this.datosService.getCategorias().subscribe({
+      next: (datos) &#x3D;&gt; {
+        this.categorias &#x3D; datos;
+        this.cargando &#x3D; false;
+        this.cdr.detectChanges();
+      },
+      error: () &#x3D;&gt; {
+        this.error &#x3D; &#x27;No se pudieron cargar las categorías.&#x27;;
+        this.cargando &#x3D; false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 }</code></pre>
     </div>
 
@@ -359,7 +551,16 @@ export class InicioComponent {
   &lt;/section&gt;
 
   &lt;section class&#x3D;&quot;container mt-4&quot;&gt;
-    &lt;div class&#x3D;&quot;row g-4 justify-content-center&quot;&gt;
+
+    &lt;div *ngIf&#x3D;&quot;cargando&quot; class&#x3D;&quot;alert alert-info text-center&quot;&gt;
+      Cargando categorías...
+    &lt;/div&gt;
+
+    &lt;div *ngIf&#x3D;&quot;error&quot; class&#x3D;&quot;alert alert-danger text-center&quot;&gt;
+      {{ error }}
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;row g-4 justify-content-center&quot; *ngIf&#x3D;&quot;!cargando &amp;&amp; !error&quot;&gt;
 
       &lt;div class&#x3D;&quot;col-12 col-md-6 col-lg-3&quot;
         *ngFor&#x3D;&quot;let categoria of categorias&quot;&gt;
@@ -404,8 +605,8 @@ export class InicioComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><main>  <section class="intro">    <h2>Explora nuestras categorías</h2>    <p>Encuentra el juego perfecto para cada momento y cada grupo.</p>  </section>  <section class="container mt-4">    <div class="row g-4 justify-content-center">      <div class="col-12 col-md-6 col-lg-3"        *ngFor="let categoria of categorias">        <a [routerLink]="[\'/categorias\', categoria.id]"          class="category-card">          <img [src]="categoria.imagen" [alt]="categoria.nombre" />          <div class="card-info">            <h3>{{ categoria.nombre }}</h3>            <p>{{ categoria.descripcion }}</p>          </div>        </a>      </div>    </div>  </section></main></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CategoriasComponent', 'selector': 'app-categorias'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'JuegoCardComponent', 'selector': 'app-juego-card'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
+        var COMPONENT_TEMPLATE = '<div><main>  <section class="intro">    <h2>Explora nuestras categorías</h2>    <p>Encuentra el juego perfecto para cada momento y cada grupo.</p>  </section>  <section class="container mt-4">    <div *ngIf="cargando" class="alert alert-info text-center">      Cargando categorías...    </div>    <div *ngIf="error" class="alert alert-danger text-center">      {{ error }}    </div>    <div class="row g-4 justify-content-center" *ngIf="!cargando && !error">      <div class="col-12 col-md-6 col-lg-3"        *ngFor="let categoria of categorias">        <a [routerLink]="[\'/categorias\', categoria.id]"          class="category-card">          <img [src]="categoria.imagen" [alt]="categoria.nombre" />          <div class="card-info">            <h3>{{ categoria.nombre }}</h3>            <p>{{ categoria.descripcion }}</p>          </div>        </a>      </div>    </div>  </section></main></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AdminJuegosComponent', 'selector': 'app-admin-juegos'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CategoriasComponent', 'selector': 'app-categorias'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'JuegoCardComponent', 'selector': 'app-juego-card'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'OfertasComponent', 'selector': 'app-ofertas'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'InicioComponent'};
 </script>

@@ -411,9 +411,9 @@ export class JuegoCardComponent {
   &lt;div class&#x3D;&quot;game-info&quot;&gt;
     &lt;h3&gt;{{ juego.nombre }}&lt;/h3&gt;
     &lt;p class&#x3D;&quot;description&quot;&gt;{{ juego.descripcion }}&lt;/p&gt;
-    &lt;p class&#x3D;&quot;price&quot;&gt;{{ juego.precio }}&lt;/p&gt;
+    &lt;p class&#x3D;&quot;price&quot;&gt;${{ juego.precio | number:&#x27;1.0-0&#x27; }}&lt;/p&gt;
     &lt;span class&#x3D;&quot;badge-descuento&quot; *ngIf&#x3D;&quot;juego.descuento&quot;&gt;
-      {{ juego.textoDescuento }}
+      🔥 En oferta
     &lt;/span&gt;
     &lt;span class&#x3D;&quot;badge-regular&quot; *ngIf&#x3D;&quot;!juego.descuento&quot;&gt;
       Precio regular
@@ -453,8 +453,8 @@ export class JuegoCardComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><article class="game-card">  <img [src]="juego.imagen" [alt]="juego.nombre" />  <div class="game-info">    <h3>{{ juego.nombre }}</h3>    <p class="description">{{ juego.descripcion }}</p>    <p class="price">{{ juego.precio }}</p>    <span class="badge-descuento" *ngIf="juego.descuento">      {{ juego.textoDescuento }}    </span>    <span class="badge-regular" *ngIf="!juego.descuento">      Precio regular    </span>    <div class="mt-3">      <button (click)="onAgregar()" class="btn-registro">        🛒 Agregar al carrito      </button>    </div>  </div></article></div>'
-    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CategoriasComponent', 'selector': 'app-categorias'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'JuegoCardComponent', 'selector': 'app-juego-card'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
+        var COMPONENT_TEMPLATE = '<div><article class="game-card">  <img [src]="juego.imagen" [alt]="juego.nombre" />  <div class="game-info">    <h3>{{ juego.nombre }}</h3>    <p class="description">{{ juego.descripcion }}</p>    <p class="price">${{ juego.precio | number:\'1.0-0\' }}</p>    <span class="badge-descuento" *ngIf="juego.descuento">      🔥 En oferta    </span>    <span class="badge-regular" *ngIf="!juego.descuento">      Precio regular    </span>    <div class="mt-3">      <button (click)="onAgregar()" class="btn-registro">        🛒 Agregar al carrito      </button>    </div>  </div></article></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'AdminJuegosComponent', 'selector': 'app-admin-juegos'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CategoriasComponent', 'selector': 'app-categorias'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'JuegoCardComponent', 'selector': 'app-juego-card'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'OfertasComponent', 'selector': 'app-ofertas'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'JuegoCardComponent'};
 </script>
