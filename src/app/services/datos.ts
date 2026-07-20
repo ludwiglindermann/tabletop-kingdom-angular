@@ -42,8 +42,14 @@ export class Datos {
    * @param posicion Índice donde se guardará el nuevo juego.
    * @returns Un observable con la respuesta de Firebase.
    */
-  crearJuego(juego: any, posicion: number): Observable<any> {
-    return this.http.put<any>(`${this.urlBase}/juegos/${posicion}.json`, juego);
+  /**
+   * POST: Crea un nuevo juego en Firebase. Firebase genera automáticamente
+   * una clave única para el nuevo registro.
+   * @param juego Objeto del juego que se desea crear.
+   * @returns Un observable con la respuesta de Firebase (incluye la clave generada).
+   */
+  crearJuego(juego: any): Observable<any> {
+    return this.http.post<any>(`${this.urlBase}/juegos.json`, juego);
   }
 
   /**

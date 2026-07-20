@@ -39,7 +39,7 @@ export class OfertasComponent implements OnInit {
   ngOnInit(): void {
     this.datosService.getJuegos().subscribe({
       next: (datos) => {
-        const lista = (datos || []).filter((j: any) => j !== null);
+        const lista = datos ? Object.values(datos).filter((j: any) => j !== null) : [];
         this.juegosEnOferta = lista.filter((juego: any) => juego.descuento);
         this.cargando = false;
         this.cdr.detectChanges();

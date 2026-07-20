@@ -56,7 +56,7 @@ export class CategoriasComponent implements OnInit {
   ngOnInit(): void {
     this.datosService.getJuegos().subscribe({
       next: (datos) => {
-        this.todosLosJuegos = (datos || []).filter((j: any) => j !== null);
+        this.todosLosJuegos = datos ? Object.values(datos).filter((j: any) => j !== null) : [];
         this.cargando = false;
         this.route.params.subscribe(params => {
           this.categoriaActual = params['id'];
